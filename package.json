@@ -1,0 +1,14 @@
+{
+  "name": "devserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "devserver/index.js",
+  "scripts": {
+    "serve": "node devserver/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
