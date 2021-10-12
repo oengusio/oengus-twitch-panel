@@ -7,53 +7,82 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Oengus twitch extension</title>
 
+        <style>
+            body {
+                padding: 10px !important;
+            }
+
+            main {
+                /*overflow-y: scroll;*/
+            }
+
+            footer {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                padding: 5px;
+            }
+        </style>
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.8.1/solar/bulmaswatch.min.css">
 
         <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
     </head>
     <body>
-        <section class="section">
+        <main>
+            <div class="container">
+
+                <article class="message is-primary">
+                    <div class="message-header">
+                        <p>
+                            <a href="#">Current run</a>
+                        </p>
+                    </div>
+                    <div class="message-body">
+                        <p>Distance - Adventure (Sprint) - PC</p>
+                        <p>Tiyenti</p>
+                    </div>
+                </article>
 
 
-            <div class="columns is-desktop">
-                <div class="column">
-                    <article class="message is-primary">
-                        <div class="message-header">
-                            <p>Current run</p>
-                        </div>
-                        <div class="message-body">
-                            <p>Distance - Adventure (Sprint) - PC</p>
-                            <p>Tiyenti</p>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="column">
-                    <article class="message is-secondary">
-                        <div class="message-header">
-                            <p>Next run in 30 minutes</p>
-                        </div>
-                        <div class="message-body">
-                            <p>Cuphead - No Major Glitches - PC</p>
-                            <p>Kev360, Becksyboy123</p>
-                        </div>
-                    </article>
-                </div>
+                <article class="message is-secondary">
+                    <div class="message-header">
+                        <p>
+                            <a href="#">Next run in 30 minutes</a>
+                        </p>
+                    </div>
+                    <div class="message-body">
+                        <p>Cuphead - No Major Glitches - PC</p>
+                        <p>Kev360, Becksyboy123</p>
+                    </div>
+                </article>
             </div>
+        </main>
 
-        </section>
+        <footer>
+            <p>
+                View the full schedule on <a href="https://oengus.io/" target="_blank">oengus.io</a>
+            </p>
+        </footer>
 
         <script>
             // requests to get to know the user
             // Twitch.ext.actions.requestIdShare()
 
+            // lovely :)
+            console.log = Twitch.ext.rig.log;
+
             Twitch.ext.onAuthorized((auth) => {
-                console.log(auth);
+                // console.log(auth);
+            });
+
+            Twitch.ext.onContext((ctx) => {
+                // game updates
             });
 
             Twitch.ext.onError((err) => {
-                console.log(err)
+                console.error(err)
             });
         </script>
     </body>
