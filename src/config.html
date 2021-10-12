@@ -33,50 +33,32 @@
                             <button class="button is-success" type="submit">Save</button>
                         </div>
                         <div class="control">
-                            <button class="button is-danger" type="button" onclick="disable()">Disable extension</button>
+                            <button class="button is-danger" type="button" onclick="disableExtension()">Disable extension</button>
                         </div>
                     </div>
                 </form>
             </div>
         </section>
 
+        <script src="twitch.js"></script>
         <script>
-            const twitch = window.Twitch.ext;
-
-            twitch.configuration.onChanged(() => {
-                console.log('config changed');
-                loadConfig();
+            twitch.onContext((ctx, aaa) => {
+                console.log(ctx)
+                console.log(aaa)
             });
 
-            twitch.onAuthorized((auth) => {
-                loadConfig();
-            });
-
-            const marathonId = document.getElementById('marathon');
-
-            function disable() {
-                twitch.configuration.set('broadcaster', '0.0', '{}');
-
-                marathonId.value = '';
-            }
+            const marathonInput = document.getElementById('marathon');
 
             function saveConfig() {
-                console.log('saving', marathonId.value)
+                console.log('saving', marathonInput.value)
                 twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
-                    marathonId: marathonId.value,
+                    marathonId: marathonInput.value,
                 }));
                 console.log('saved?')
             }
 
-            function loadConfig() {
-                const configRaw = twitch.configuration.broadcaster ? twitch.configuration.broadcaster.content : '{}';
-                let config = JSON.parse(configRaw);
-
-                marathonId.value = config.marathonId || '';
-            }
-
-            twitch.onError((err) => {
-                console.error(err)
+            loadConfig((config) => {
+                marathonInput.value = config.marathonId || '';
             });
         </script>
     </body>

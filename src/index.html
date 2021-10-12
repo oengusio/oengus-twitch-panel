@@ -16,10 +16,6 @@
                 padding: 10px !important;
             }
 
-            main {
-                /*overflow-y: scroll;*/
-            }
-
             footer {
                 position: absolute;
                 bottom: 0;
@@ -74,97 +70,35 @@
             </article>
         </template>
 
+        <script>
+            // debugging on twitch is fun :)
+            const old = console.log;
+
+            console.log = function(data) {
+              old(data);
+              Twitch.ext.rig.log(data);
+            };
+        </script>
+
+        <script src="twitch.js"></script>
+        <script src="ticker.js"></script>
         <script src="oengus.js"></script>
         <script src="time.js"></script>
         <script>
-            let marathonId = '';
-
-            function insetTemplate(templateId, target, data) {
-                const template = document.getElementById(templateId);
-
-                // Clone the new row and insert it into the table
-                const clone = template.content.cloneNode(true);
-
-                for (const key in data) {
-                    const slot = clone.querySelector(`span#${key}`);
-
-                    if (slot) {
-                        slot.innerHTML = data[key];
-                    }
-                }
-
-                target.appendChild(clone);
-            }
-
-            const twitch = window.Twitch.ext;
-
-            // requests to get to know the user
-            // Twitch.ext.actions.requestIdShare()
-
-            // lovely :)
-            // console.log = twitch.rig.log;
-
-            twitch.onAuthorized((auth) => {
-                // console.log(auth);
-            });
-
-            twitch.configuration.onChanged(() => {
-                console.log('config changed');
-                loadConfig();
-            });
-
-            function loadConfig() {
-                const configRaw = twitch.configuration.broadcaster ? twitch.configuration.broadcaster.content : '{}';
-                let config = JSON.parse(configRaw);
-
+            loadConfig((config) => {
                 if (!config.marathonId) {
-                    // TODO: don't render anything?
+                    // TODO: don't render anything? Show error?
                     return;
                 }
 
-                marathonId = config.marathonId;
+                window.marathonId = config.marathonId;
 
                 updateTicker();
 
-                setInterval(() => {
+                // update every 60 seconds
+                /*setInterval(() => {
                     updateTicker();
-                }, 60 * 1000); // update every 60 seconds
-            }
-
-            function updateTicker() {
-                getTickerData(marathonId, (current, next) => {
-                    const target = document.querySelector('.container');
-
-                    target.innerHTML = '';
-
-                    if (current) {
-                        insetTemplate('current-run-template', target, {
-                            game: current.gameName,
-                            category: current.categoryName,
-                            console: current.console,
-                            runners: current.runners.map((runner) => runner.username).join(', ')
-                        });
-                    }
-
-                    if (next) {
-                        insetTemplate('next-run-template', target, {
-                            game: next.gameName,
-                            category: next.categoryName,
-                            console: next.console,
-                            time: formatDate(Date.parse(next.date)),
-                            runners: next.runners.map((runner) => runner.username).join(', ')
-                        });
-                    }
-                });
-            }
-
-            /*twitch.onContext((ctx) => {
-                // game updates?
-            });*/
-
-            twitch.onError((err) => {
-                console.error(err);
-                console.log(err);
+                }, 60 * 1000);*/
             });
         </script>
     </body>
