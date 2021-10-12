@@ -54,7 +54,7 @@
     "installationCount": -42,
     "liveConfigUrl": "",
     "name": "oengus",
-    "panelHeight": 300,
+    "panelHeight": 500,
     "privacyPolicyUrl": "https://oengus.io/about",
     "requestIdentityLink": false,
     "requiredBroadcasterAbilities": [],
@@ -74,7 +74,7 @@
     "views": {
       "panel": {
         "viewerUrl": "https://localhost:8080/index.html",
-        "height": 300,
+        "height": 500,
         "canLinkExternalContent": false
       },
       "config": {

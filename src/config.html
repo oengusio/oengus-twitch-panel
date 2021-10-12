@@ -1,1 +1,65 @@
-<p>No config yet</p>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Oengus extension config</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.8.1/solar/bulmaswatch.min.css">
+
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    </head>
+    <body>
+
+        <form action="" onsubmit="saveConfig(); return false;">
+            <input type="text" id="marathon" required/>
+            <label for="marathon">Marathon id</label>
+
+            <button type="submit">Save</button>
+        </form>
+
+        <button onclick="disable()">disable</button>
+
+        <script>
+            const twitch = window.Twitch.ext;
+
+            twitch.configuration.onChanged(() => {
+                console.log('config changed');
+                loadConfig();
+            });
+
+            twitch.onAuthorized((auth) => {
+                loadConfig();
+            });
+
+            const marathonId = document.getElementById('marathon');
+
+            function disable() {
+                twitch.configuration.set('broadcaster', '0.0', '{}');
+                loadConfig();
+            }
+
+            function saveConfig() {
+                console.log('saving', marathonId.value)
+                twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
+                    marathonId: marathonId.value,
+                }));
+                console.log('saved?')
+            }
+
+            function loadConfig() {
+                const configRaw = twitch.configuration.broadcaster ? twitch.configuration.broadcaster.content : '{}';
+                let config = JSON.parse(configRaw);
+
+                marathonId.value = config.marathonId || '';
+            }
+
+            twitch.onError((err) => {
+                console.error(err)
+            });
+        </script>
+    </body>
+</html>

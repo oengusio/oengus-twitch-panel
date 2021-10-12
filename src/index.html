@@ -33,30 +33,6 @@
         <main>
             <div class="container">
 
-                <article class="message is-primary">
-                    <div class="message-header">
-                        <p>
-                            <a href="#">Current run</a>
-                        </p>
-                    </div>
-                    <div class="message-body">
-                        <p>Distance - Adventure (Sprint) - PC</p>
-                        <p>Tiyenti</p>
-                    </div>
-                </article>
-
-
-                <article class="message is-secondary">
-                    <div class="message-header">
-                        <p>
-                            <a href="#">Next run in 30 minutes</a>
-                        </p>
-                    </div>
-                    <div class="message-body">
-                        <p>Cuphead - No Major Glitches - PC</p>
-                        <p>Kev360, Becksyboy123</p>
-                    </div>
-                </article>
             </div>
         </main>
 
@@ -66,23 +42,111 @@
             </p>
         </footer>
 
+        <template id="current-run-template">
+            <article class="message is-primary">
+                <div class="message-header">
+                    <p>
+                        <a href="#">Current run</a>
+                    </p>
+                </div>
+                <div class="message-body">
+                    <p><span id="game"></span> - <span id="category"></span> - <span id="console"></span></p>
+                    <p><span id="runners"></span></p>
+                </div>
+            </article>
+        </template>
+
+        <template id="next-run-template">
+            <article class="message is-secondary">
+                <div class="message-header">
+                    <p>
+                        <a href="#">Next run in -1 seconds</a>
+                    </p>
+                </div>
+                <div class="message-body">
+                    <p><span id="game"></span> - <span id="category"></span> - <span id="console"></span></p>
+                    <p><span id="runners"></span></p>
+                </div>
+            </article>
+        </template>
+
+        <script src="oengus.js"></script>
         <script>
+            function insetTemplate(templateId, target, data) {
+                const template = document.getElementById(templateId);
+
+                // Clone the new row and insert it into the table
+                const clone = template.content.cloneNode(true);
+
+                for (const key in data) {
+                    const slot = clone.querySelector(`span#${key}`);
+
+                    if (slot) {
+                        slot.innerHTML = data[key];
+                    }
+                }
+
+                target.appendChild(clone);
+            }
+
+            const twitch = window.Twitch.ext;
+
             // requests to get to know the user
             // Twitch.ext.actions.requestIdShare()
 
             // lovely :)
-            console.log = Twitch.ext.rig.log;
+            console.log = twitch.rig.log;
 
-            Twitch.ext.onAuthorized((auth) => {
+            twitch.onAuthorized((auth) => {
                 // console.log(auth);
             });
 
-            Twitch.ext.onContext((ctx) => {
-                // game updates
+            twitch.configuration.onChanged(() => {
+                console.log('config changed');
+                loadConfig();
             });
 
-            Twitch.ext.onError((err) => {
-                console.error(err)
+            function loadConfig() {
+                const configRaw = twitch.configuration.broadcaster ? twitch.configuration.broadcaster.content : '{}';
+                let config = JSON.parse(configRaw);
+
+                if (!config.marathonId) {
+                    // TODO: don't render anything?
+                    return;
+                }
+
+                getTickerData(config.marathonId, (current, next) => {
+                    const target = document.querySelector('.container');
+
+                    target.innerHTML = '';
+
+                    if (current) {
+                        insetTemplate('current-run-template', target, {
+                            game: current.gameName,
+                            category: current.categoryName,
+                            console: current.console,
+                            runners: current.runners.map((runner) => runner.username).join(', ')
+                        });
+                    }
+
+                    if (next) {
+                        insetTemplate('next-run-template', target, {
+                            game: next.gameName,
+                            category: next.categoryName,
+                            console: next.console,
+                            runners: next.runners.map((runner) => runner.username).join(', ')
+                        });
+                    }
+                });
+            }
+
+            /*twitch.onContext((ctx) => {
+                // game updates?
+            });*/
+
+            twitch.onError((err) => {
+                console.error(err);
+                console.log(err);
             });
         </script>
     </body>
