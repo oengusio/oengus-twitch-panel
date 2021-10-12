@@ -13,15 +13,32 @@
         <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
     </head>
     <body>
+        <section class="section">
+            <h2 class="title">Oengus extension configuration</h2>
+            <div class="container">
+                <form action="" onsubmit="saveConfig(); return false;">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a href="" class="button is-static">
+                                https://oengus.io/marathon/
+                            </a>
+                        </p>
+                        <div class="control">
+                            <input placeholder="myMarathon" class="input" type="text" id="marathon" required/>
+                        </div>
+                    </div>
 
-        <form action="" onsubmit="saveConfig(); return false;">
-            <input type="text" id="marathon" required/>
-            <label for="marathon">Marathon id</label>
-
-            <button type="submit">Save</button>
-        </form>
-
-        <button onclick="disable()">disable</button>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-success" type="submit">Save</button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger" type="button" onclick="disable()">Disable extension</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
 
         <script>
             const twitch = window.Twitch.ext;
@@ -39,7 +56,8 @@
 
             function disable() {
                 twitch.configuration.set('broadcaster', '0.0', '{}');
-                loadConfig();
+
+                marathonId.value = '';
             }
 
             function saveConfig() {
