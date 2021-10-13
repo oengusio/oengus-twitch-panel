@@ -1,4 +1,8 @@
 function getTickerData(marathon, callback) {
+    if (!marathon) {
+        return; // sanity check
+    }
+
     fetch(
         `https://oengus.io/api/marathons/${marathon}/schedule/ticker`
     )

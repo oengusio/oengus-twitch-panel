@@ -22,6 +22,14 @@
                 right: 0;
                 padding: 5px;
             }
+
+            .run-info > span:not(:last-of-type)::after {
+                content: ' - ';
+            }
+
+            .runner-info > span:not(:last-of-type)::after {
+                content: ', ';
+            }
         </style>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -42,44 +50,21 @@
             </p>
         </footer>
 
-        <template id="current-run-template">
-            <article class="message is-primary">
+        <template id="run-template">
+            <article class="message">
                 <div class="message-header">
                     <p>
-                        <a href="#">Current run</a>
+                        <a href="#" data-action="run-details"></a>
                     </p>
                 </div>
                 <div class="message-body">
-                    <p><span id="game"></span> - <span id="category"></span> - <span id="console"></span></p>
-                    <p><span id="runners"></span></p>
+                    <p class="run-info"></p>
+                    <p class="runner-info"></p>
                 </div>
             </article>
         </template>
 
-        <template id="next-run-template">
-            <article class="message is-secondary">
-                <div class="message-header">
-                    <p>
-                        <a href="#">Next run in <span id="time"></span></a>
-                    </p>
-                </div>
-                <div class="message-body">
-                    <p><span id="game"></span> - <span id="category"></span> - <span id="console"></span></p>
-                    <p><span id="runners"></span></p>
-                </div>
-            </article>
-        </template>
-
-        <script>
-            // debugging on twitch is fun :)
-            const old = console.log;
-
-            console.log = function(data) {
-              old(data);
-              Twitch.ext.rig.log(data);
-            };
-        </script>
-
+        <script src="global.js"></script>
         <script src="twitch.js"></script>
         <script src="ticker.js"></script>
         <script src="oengus.js"></script>

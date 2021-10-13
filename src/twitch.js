@@ -5,8 +5,8 @@ twitch.onAuthorized((auth) => {
 });
 
 twitch.onContext((ctx, changed) => {
-    twitch.rig.log('changed', changed);
-    twitch.rig.log('ctx', ctx);
+    log('changed', changed);
+    log('ctx', ctx);
 
     if (changed.includes('game') && updateTicker) {
         // Update the ticker
@@ -21,7 +21,7 @@ function disableExtension() {
 }
 
 function getParsedConfig() {
-    const configRaw = twitch.configuration.broadcaster ? twitch.configuration.broadcaster.content : '{}';
+    const configRaw = twitch.configuration.broadcaster?.content ?? '{}';
 
     return JSON.parse(configRaw);
 }
@@ -30,12 +30,11 @@ function loadConfig(callback) {
     callback(getParsedConfig());
 
     twitch.configuration.onChanged(() => {
-        console.log('config changed');
+        log('config changed');
         callback(getParsedConfig());
     });
 }
 
 twitch.onError((err) => {
-    console.error(err);
-    console.log(err);
+    log(err);
 });
