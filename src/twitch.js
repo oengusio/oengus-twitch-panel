@@ -15,7 +15,7 @@ twitch.onContext((ctx, changed) => {
 });
 
 function disableExtension() {
-    twitch.configuration.set('broadcaster', '0.0', '{}');
+    twitch.configuration.set('broadcaster', '1.0', '{}');
 
     marathonId.value = '';
 }
