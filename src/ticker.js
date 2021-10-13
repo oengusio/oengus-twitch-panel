@@ -1,3 +1,5 @@
+const localstate = { next: null, current: null };
+
 function insetTemplate(templateId, target, data) {
     const template = document.getElementById(templateId);
 
@@ -20,27 +22,38 @@ function updateTicker() {
     console.log('Updating ticker');
 
     getTickerData(window.marathonId, (current, next) => {
-        const target = document.querySelector('.container');
+        localstate.current = current;
+        localstate.next = next;
 
-        target.innerHTML = '';
-
-        if (current) {
-            insetTemplate('current-run-template', target, {
-                game: current.gameName,
-                category: current.categoryName,
-                console: current.console,
-                runners: current.runners.map((runner) => runner.username).join(', ')
-            });
-        }
-
-        if (next) {
-            insetTemplate('next-run-template', target, {
-                game: next.gameName,
-                category: next.categoryName,
-                console: next.console,
-                time: formatDate(Date.parse(next.date)),
-                runners: next.runners.map((runner) => runner.username).join(', ')
-            });
-        }
+        redrawTicker();
     });
+}
+
+function redrawTicker() {
+    const target = document.querySelector('.container');
+
+    target.innerHTML = '';
+
+    if (localstate.current) {
+        const current = localstate.current;
+
+        insetTemplate('current-run-template', target, {
+            game: current.gameName,
+            category: current.categoryName,
+            console: current.console,
+            runners: current.runners.map((runner) => runner.username).join(', ')
+        });
+    }
+
+    if (localstate.next) {
+        const next = localstate.next;
+
+        insetTemplate('next-run-template', target, {
+            game: next.gameName,
+            category: next.categoryName,
+            console: next.console,
+            time: formatDate(Date.parse(next.date)),
+            runners: next.runners.map((runner) => runner.username).join(', ')
+        });
+    }
 }

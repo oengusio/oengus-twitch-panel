@@ -85,7 +85,14 @@
         <script src="oengus.js"></script>
         <script src="time.js"></script>
         <script>
+            let interval = -1;
+
             loadConfig((config) => {
+                if (interval > -1) {
+                    interval = -1;
+                    clearInterval(interval);
+                }
+
                 if (!config.marathonId) {
                     // TODO: don't render anything? Show error?
                     return;
@@ -96,9 +103,9 @@
                 updateTicker();
 
                 // update every 60 seconds
-                /*setInterval(() => {
-                    updateTicker();
-                }, 60 * 1000);*/
+                interval = setInterval(() => {
+                    redrawTicker();
+                }, 60 * 1000);
             });
         </script>
     </body>
