@@ -74,7 +74,7 @@
     },
     "id": "6xmizze5bt4wvfwphk95fwtth552xr",
     "installationCount": -42,
-    "liveConfigUrl": "",
+    "liveConfigUrl": "https://localhost:8080/config.html",
     "name": "oengus",
     "panelHeight": 400,
     "privacyPolicyUrl": "https://oengus.io/about",
@@ -100,6 +100,10 @@
         "canLinkExternalContent": false
       },
       "config": {
+        "viewerUrl": "https://localhost:8080/config.html",
+        "canLinkExternalContent": false
+      },
+      "liveConfig": {
         "viewerUrl": "https://localhost:8080/config.html",
         "canLinkExternalContent": false
       }
