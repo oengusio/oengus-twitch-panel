@@ -1,6 +1,6 @@
-function log(data) {
-    console.log(data);
-    Twitch.ext.rig.log(data);
+function log(...data) {
+    console.log('[oengus]', ...data);
+    Twitch.ext.rig.log(...data);
 }
 
 document.addEventListener('click', (event) => {
