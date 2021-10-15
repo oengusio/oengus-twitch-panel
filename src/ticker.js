@@ -40,7 +40,12 @@ function insetTemplate(target, data) {
 function updateTicker() {
     log('Updating ticker');
 
-    getTickerData(window.marathonId, (current, next) => {
+    const marathonId = window.marathonId;
+    const link = `https://v2.oengus.io/marathon/${marathonId}/schedule`;
+
+    document.getElementById('schedule-link').setAttribute('href', link);
+
+    getTickerData(marathonId, (current, next) => {
         localstate.current = current;
         localstate.next = next;
 

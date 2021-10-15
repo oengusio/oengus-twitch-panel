@@ -46,7 +46,7 @@
 
         <footer>
             <p>
-                View the full schedule on <a href="https://oengus.io/" target="_blank">oengus.io</a>
+                View the full schedule on <a id="schedule-link" href="https://oengus.io/" target="_blank">oengus.io</a>
             </p>
         </footer>
 
@@ -79,7 +79,10 @@
                 }
 
                 if (!config.marathonId) {
-                    // TODO: don't render anything? Show error?
+                    // reset the link in case of a config update
+                    document.getElementById('schedule-link').setAttribute('href', 'https://oengus.io/');
+                    document.querySelector('.container').innerHTML = '<p>Extension not configured!</p>' +
+                            '<p>Please configure the extension within the settings.</p>';
                     return;
                 }
 
