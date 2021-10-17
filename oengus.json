@@ -1,0 +1,119 @@
+{
+  "allowHttpBackend": false,
+  "backendCommand": "",
+  "backendFolderName": "",
+  "certificateExceptions": [
+    {
+      "isAllowed": true,
+      "isEphemeral": false,
+      "isOrigin": true,
+      "value": "https://localhost:8080"
+    }
+  ],
+  "extensionViews": [
+    {
+      "channelId": "91097747",
+      "configurationAnchor": "panel",
+      "displayChannelName": "duncte123",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "1",
+      "isPopout": false,
+      "label": "main-view",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "panel",
+      "viewerType": "Broadcaster"
+    },
+    {
+      "channelId": "91097747",
+      "configurationAnchor": "panel",
+      "displayChannelName": "duncte123",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "2",
+      "isPopout": false,
+      "label": "viewer",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "panel",
+      "viewerType": "Logged-In Viewer"
+    }
+  ],
+  "manifest": {
+    "anchor": "panel",
+    "assetUrls": [],
+    "authorName": "oengus.io",
+    "bitsEnabled": false,
+    "canInstall": true,
+    "configUrl": "https://localhost:8080/config.html",
+    "configurationLocation": "hosted",
+    "description": "This will be written when the extension is complete",
+    "eulaTosUrl": "https://oengus.io/about",
+    "hasChatSupport": false,
+    "iconUrl": "https://extensions-discovery-images.twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/logoef65e676-ebb6-4697-9bed-f3ce1d68b8a6",
+    "iconUrls": {
+      "100x100": "https://extensions-discovery-images.twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/logoef65e676-ebb6-4697-9bed-f3ce1d68b8a6",
+      "24x24": "https://extensions-discovery-images.twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/taskbar23bf63e0-c80f-41b9-b93f-bfc14327877f"
+    },
+    "id": "6xmizze5bt4wvfwphk95fwtth552xr",
+    "installationCount": -42,
+    "liveConfigUrl": "https://localhost:8080/config.html",
+    "name": "oengus",
+    "panelHeight": 400,
+    "privacyPolicyUrl": "https://oengus.io/about",
+    "requestIdentityLink": false,
+    "requiredBroadcasterAbilities": [],
+    "screenshotUrls": [],
+    "sku": "",
+    "state": "Testing",
+    "subscriptionsSupportLevel": "none",
+    "summary": "Provides current run info directly on twitch",
+    "supportEmail": "contact@oengus.io",
+    "vendorCode": "",
+    "version": "0.0.1",
+    "viewerSummary": "Provides current run info directly on twitch",
+    "viewerUrl": "https://localhost:8080/index.html",
+    "viewerUrls": {
+      "panel": "https://localhost:8080/index.html"
+    },
+    "views": {
+      "panel": {
+        "viewerUrl": "https://localhost:8080/index.html",
+        "height": 400,
+        "canLinkExternalContent": false
+      },
+      "config": {
+        "viewerUrl": "https://localhost:8080/config.html",
+        "canLinkExternalContent": false
+      },
+      "liveConfig": {
+        "viewerUrl": "https://localhost:8080/config.html",
+        "canLinkExternalContent": false
+      }
+    },
+    "whitelistedConfigUrls": [],
+    "whitelistedPanelUrls": []
+  },
+  "frontendCommand": "",
+  "frontendFolderName": "",
+  "name": "oengus",
+  "usingRandomFrontendHostingPort": false,
+  "version": 3
+}

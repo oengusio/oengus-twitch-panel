@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Oengus extension config</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.8.1/solar/bulmaswatch.min.css">
+
+        <script async src="https://cdn.jsdelivr.net/npm/bulma-toast@2.4.1/dist/bulma-toast.min.js"></script>
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    </head>
+    <body>
+        <section class="section">
+            <h2 class="title">Oengus extension configuration</h2>
+            <div class="container">
+                <!--
+                quick copy-pastes for testing:
+                SRR2021
+                bsgo6
+                -->
+
+                <form action="" onsubmit="saveConfig(); return false;">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <a href="" class="button is-static">
+                                https://oengus.io/marathon/
+                            </a>
+                        </p>
+                        <div class="control">
+                            <input placeholder="myMarathon" class="input" type="text" id="marathon" required/>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-success" type="submit">Save</button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger" type="button" onclick="disableExtension()">Disable extension</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <script src="global.js"></script>
+        <script src="twitch.js"></script>
+        <script>
+            const marathonInput = document.getElementById('marathon');
+
+            function saveConfig() {
+                twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
+                    marathonId: marathonInput.value,
+                }));
+
+                bulmaToast.toast({
+                    duration: 2000,
+                    message: 'Config saved!',
+                    type: 'is-success',
+                    position: 'top-center',
+                    dismissible: true,
+                });
+            }
+
+            function disableExtension() {
+                marathonInput.value = '';
+
+                saveConfig();
+            }
+
+            loadConfig((config) => {
+                marathonInput.value = config.marathonId || '';
+            });
+        </script>
+    </body>
+</html>

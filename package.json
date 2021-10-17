@@ -1,0 +1,15 @@
+{
+  "name": "devserver",
+  "version": "1.0.0",
+  "description": "",
+  "license": "AGPL-3.0-only",
+  "main": "devserver/index.js",
+  "scripts": {
+    "serve": "node devserver/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

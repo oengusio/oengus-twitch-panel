@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Oengus twitch extension</title>
+
+        <style>
+            html {
+                overflow-y: auto !important;
+            }
+
+            body {
+                padding: 10px !important;
+            }
+
+            footer {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                padding: 5px;
+            }
+
+            .run-info > span:not(:last-of-type)::after {
+                content: ' - ';
+            }
+
+            .runner-info > span:not(:last-of-type)::after {
+                content: ', ';
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.8.1/solar/bulmaswatch.min.css">
+
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    </head>
+    <body>
+        <main>
+            <div class="container">
+
+            </div>
+        </main>
+
+        <footer>
+            <p>
+                View the full schedule on <a id="schedule-link" href="https://oengus.io/" target="_blank">oengus.io</a>
+            </p>
+        </footer>
+
+        <template id="run-template">
+            <article class="message">
+                <div class="message-header">
+                    <p>
+                        <a href="#" data-action="run-details"></a>
+                    </p>
+                </div>
+                <div class="message-body">
+                    <p class="run-info"></p>
+                    <p class="runner-info"></p>
+                </div>
+            </article>
+        </template>
+
+        <script src="global.js"></script>
+        <script src="twitch.js"></script>
+        <script src="ticker.js"></script>
+        <script src="oengus.js"></script>
+        <script src="time.js"></script>
+        <script>
+            let interval = -1;
+
+            loadConfig((config) => {
+                if (interval > -1) {
+                    interval = -1;
+                    clearInterval(interval);
+                }
+
+                if (!config.marathonId) {
+                    // reset the link in case of a config update
+                    document.getElementById('schedule-link').setAttribute('href', 'https://oengus.io/');
+                    document.querySelector('.container').innerHTML = '<p>Extension not configured!</p>' +
+                            '<p>Please configure the extension within the settings.</p>';
+                    return;
+                }
+
+                window.marathonId = config.marathonId;
+
+                updateTicker();
+
+                // update every 60 seconds
+                interval = setInterval(() => {
+                    redrawTicker();
+                }, 60 * 1000);
+            });
+        </script>
+    </body>
+</html>
