@@ -1,4 +1,11 @@
 const marathonInput = document.getElementById('marathon');
+document.getElementById('config-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    saveConfig();
+
+    return false;
+});
 
 function saveConfig() {
     twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
