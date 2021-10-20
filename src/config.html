@@ -7,10 +7,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Oengus extension config</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.8.1/solar/bulmaswatch.min.css">
+        <link rel="stylesheet" href="bulma/bulma.min.css">
+        <link rel="stylesheet" href="bulma/bulmaswatch.min.css">
 
-        <script async src="https://cdn.jsdelivr.net/npm/bulma-toast@2.4.1/dist/bulma-toast.min.js"></script>
+        <script async src="bulma/bulma-toast.min.js"></script>
         <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
     </head>
     <body>
@@ -49,32 +49,6 @@
 
         <script src="global.js"></script>
         <script src="twitch.js"></script>
-        <script>
-            const marathonInput = document.getElementById('marathon');
-
-            function saveConfig() {
-                twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
-                    marathonId: marathonInput.value,
-                }));
-
-                bulmaToast.toast({
-                    duration: 2000,
-                    message: 'Config saved!',
-                    type: 'is-success',
-                    position: 'top-center',
-                    dismissible: true,
-                });
-            }
-
-            function disableExtension() {
-                marathonInput.value = '';
-
-                saveConfig();
-            }
-
-            loadConfig((config) => {
-                marathonInput.value = config.marathonId || '';
-            });
-        </script>
+        <script src="config.js"></script>
     </body>
 </html>
