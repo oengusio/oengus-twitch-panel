@@ -23,6 +23,12 @@
                 padding: 5px;
             }
 
+            img.brandLogo {
+                height: 1em;
+                position: relative;
+                bottom: -3px;
+            }
+
             .run-info > span:not(:last-of-type)::after {
                 content: ' - ';
             }
@@ -46,7 +52,10 @@
 
         <footer>
             <p>
-                View the full schedule on <a id="schedule-link" href="https://oengus.io/" target="_blank">oengus.io</a>
+                View the full schedule on
+                <a id="schedule-link" href="https://oengus.io/" target="_blank">
+                    <img class="brandLogo" src="assets/logo.svg" alt="Oengus.io"/>
+                </a>
             </p>
         </footer>
 

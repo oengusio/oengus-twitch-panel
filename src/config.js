@@ -67,5 +67,5 @@ function disableExtension() {
 
 loadConfig((config) => {
     marathonInput.value = config.marathonId || '';
-    marathonNameInput.value = config.marathonId || 'None';
+    marathonNameInput.value = config.marathonName || 'None';
 });

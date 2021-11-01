@@ -1,4 +1,6 @@
 const twitch = window.Twitch.ext;
+let currentGame = '';
+let previousGame = '';
 
 twitch.onAuthorized((auth) => {
     // console.log(auth);

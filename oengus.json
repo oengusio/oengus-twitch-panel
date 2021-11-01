@@ -62,7 +62,7 @@
     "authorName": "oengus.io",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/config.html",
+    "configUrl": "https://localhost:8080/config.html",
     "configurationLocation": "hosted",
     "description": "Always have the latest run info below your streams without your viewers having to visit Oengus and leave the stream!",
     "eulaTosUrl": "https://oengus.io/about",
@@ -75,8 +75,8 @@
     },
     "id": "6xmizze5bt4wvfwphk95fwtth552xr",
     "installationCount": -42,
-    "liveConfigUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/config.html",
-    "name": "oengus",
+    "liveConfigUrl": "https://localhost:8080/config.html",
+    "name": "Oengus",
     "panelHeight": 400,
     "privacyPolicyUrl": "https://oengus.io/about",
     "requestIdentityLink": false,
@@ -86,29 +86,29 @@
       "https://extensions-discovery-images.twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/screenshotca0c749b-1be6-46e8-ae9b-bbb3a034784d"
     ],
     "sku": "",
-    "state": "Pending Action",
+    "state": "Testing",
     "subscriptionsSupportLevel": "none",
     "summary": "Provides current run info directly on twitch",
     "supportEmail": "contact@oengus.io",
     "vendorCode": "",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "viewerSummary": "Provides current run info directly on twitch",
-    "viewerUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/index.html",
+    "viewerUrl": "https://localhost:8080/index.html",
     "viewerUrls": {
-      "panel": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/index.html"
+      "panel": "https://localhost:8080/index.html"
     },
     "views": {
       "panel": {
-        "viewerUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/index.html",
+        "viewerUrl": "https://localhost:8080/index.html",
         "height": 400,
         "canLinkExternalContent": false
       },
       "config": {
-        "viewerUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/config.html",
+        "viewerUrl": "https://localhost:8080/config.html",
         "canLinkExternalContent": false
       },
       "liveConfig": {
-        "viewerUrl": "https://6xmizze5bt4wvfwphk95fwtth552xr.ext-twitch.tv/6xmizze5bt4wvfwphk95fwtth552xr/0.0.1/12d7b1c5525e9f08390fa1a942092a2d/config.html",
+        "viewerUrl": "https://localhost:8080/config.html",
         "canLinkExternalContent": false
       }
     },
