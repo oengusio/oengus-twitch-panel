@@ -20,6 +20,6 @@ loadConfig((config) => {
 
     // update every 60 seconds
     interval = setInterval(() => {
-        redrawTicker();
+        redrawTicker(false);
     }, 60 * 1000);
 });

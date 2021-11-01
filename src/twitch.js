@@ -1,16 +1,19 @@
 const twitch = window.Twitch.ext;
-let currentGame = '';
-let previousGame = '';
+window.currentGame = '';
+// window.previousGame = '';
 
 twitch.onAuthorized((auth) => {
     // console.log(auth);
 });
 
 twitch.onContext((ctx, changed) => {
-    log('changed', changed);
-    log('ctx', ctx);
+    // log('changed', changed);
+    // log('ctx', ctx);
 
     if (changed.includes('game') && updateTicker) {
+        // window.previousGame = window.currentGame;
+        window.currentGame = ctx.game;
+
         // Update the ticker
         updateTicker();
     }

@@ -49,11 +49,19 @@ function updateTicker() {
         localstate.current = current;
         localstate.next = next;
 
-        redrawTicker();
+        redrawTicker(true);
     });
 }
 
-function redrawTicker() {
+function redrawTicker(fromUpdate) {
+    // TODO: test this properly
+    // in case the schedule does not align with current run
+    /*if (!fromUpdate && localstate.next &&
+        localstate.next.gameName !== window.currentGame &&
+        Date.parse(localstate.next.date) < Date.now()) {
+        updateTicker();
+    }*/
+
     log('Redrawing ticker');
 
     const target = document.querySelector('.container');
