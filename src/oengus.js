@@ -4,7 +4,12 @@ function getTickerData(marathon, callback) {
     }
 
     fetch(
-        `https://oengus.io/api/marathons/${marathon}/schedule/ticker`
+        `https://oengus.io/api/marathons/${marathon}/schedule/ticker`,
+        {
+            headers: {
+                'User-Agent': 'OengusIO Twitch Panel'
+            },
+        }
     )
         .then((r) => r.json())
         .then((data) => {
@@ -13,4 +18,22 @@ function getTickerData(marathon, callback) {
         .catch((e) => {
             console.error(e);
         });
+}
+
+async function getMarathonName(marathon) {
+    if (!marathon) {
+        return; // sanity check
+    }
+
+    const res = await fetch(
+        `https://oengus.io/api/marathons/${marathon}`,
+        {
+            headers: {
+                'User-Agent': 'OengusIO Twitch Panel'
+            },
+        }
+    );
+    const json = await res.json();
+
+    return json.name;
 }

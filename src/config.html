@@ -7,11 +7,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Oengus extension config</title>
 
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+
         <link rel="stylesheet" href="bulma/bulma.min.css">
         <link rel="stylesheet" href="bulma/bulmaswatch.min.css">
 
         <script async src="bulma/bulma-toast.min.js"></script>
-        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
     </head>
     <body>
         <section class="section">
@@ -24,6 +25,19 @@
                 -->
 
                 <form id="config-form" action="">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Selected Marathon: </label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input is-static" type="text" id="marathon_name" value="" readonly>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="field has-addons">
                         <p class="control">
                             <a href="" class="button is-static">
@@ -48,6 +62,7 @@
         </section>
 
         <script src="global.js"></script>
+        <script src="oengus.js"></script>
         <script src="twitch.js"></script>
         <script src="config.js"></script>
     </body>
