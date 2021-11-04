@@ -41,7 +41,8 @@ function updateTicker() {
     log('Updating ticker');
 
     const marathonId = window.marathonId;
-    const link = `https://v2.oengus.io/marathon/${marathonId}/schedule`;
+    // TODO: Implement i18n
+    const link = `https://v2.oengus.io/en-GB/marathon/${marathonId}/schedule`;
 
     document.getElementById('schedule-link').setAttribute('href', link);
 
