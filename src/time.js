@@ -1,7 +1,8 @@
 // adapted from v2
 // twitch provides a locale to us
-const locale = (new URL(document.location)).searchParams.get('locale');
-const format = new Intl.RelativeTimeFormat(locale);
+// const locale = (new URL(document.location)).searchParams.get('locale');
+// TODO: change to correct locale, use en for consistency for now
+const format = new Intl.RelativeTimeFormat('en-GB');
 
 function formatDate(datetime) {
     const date = new Date(datetime).getTime();
