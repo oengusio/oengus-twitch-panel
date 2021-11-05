@@ -8,6 +8,12 @@
       "isEphemeral": false,
       "isOrigin": true,
       "value": "https://localhost:8080"
+    },
+    {
+      "isAllowed": false,
+      "isEphemeral": false,
+      "isOrigin": false,
+      "value": "https://192.168.18.10:8080/index.html?anchor=panel&language=en&locale=en-US&mode=viewer&state=testing&platform=web"
     }
   ],
   "extensionViews": [
@@ -91,13 +97,17 @@
     "summary": "Provides current run info directly on twitch",
     "supportEmail": "contact@oengus.io",
     "vendorCode": "",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "viewerSummary": "Provides current run info directly on twitch",
     "viewerUrl": "https://localhost:8080/index.html",
     "viewerUrls": {
+      "mobile": "https://localhost:8080/index.html",
       "panel": "https://localhost:8080/index.html"
     },
     "views": {
+      "mobile": {
+        "viewerUrl": "https://localhost:8080/index.html"
+      },
       "panel": {
         "viewerUrl": "https://localhost:8080/index.html",
         "height": 400,
