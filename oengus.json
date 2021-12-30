@@ -97,7 +97,7 @@
     "summary": "Provides current run info directly on twitch",
     "supportEmail": "contact@oengus.io",
     "vendorCode": "",
-    "version": "0.0.1",
+    "version": "0.03",
     "viewerSummary": "Provides current run info directly on twitch",
     "viewerUrl": "https://localhost:8080/index.html",
     "viewerUrls": {

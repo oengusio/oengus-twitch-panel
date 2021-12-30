@@ -39,6 +39,13 @@ async function saveConfig() {
             marathonName,
         }));
 
+        ga('send', 'event', {
+            eventCategory: 'config',
+            eventAction: 'ConfigSaved',
+            // eventLabel: 'Label',
+            eventValue: marathonId,
+        });
+
         bulmaToast.toast({
             duration: 2000,
             single: true,
@@ -65,7 +72,21 @@ function disableExtension() {
     saveConfig();
 }
 
+ga('send', 'event', {
+    eventCategory: 'Load',
+    eventAction: 'PageLoaded',
+    // eventLabel: 'Label',
+    eventValue: 'configuration',
+});
+
 loadConfig((config) => {
     marathonInput.value = config.marathonId || '';
     marathonNameInput.value = config.marathonName || 'None';
+
+    ga('send', 'event', {
+        eventCategory: 'config',
+        eventAction: 'ConfigLoaded',
+        // eventLabel: 'Label',
+        eventValue: config,
+    });
 });
