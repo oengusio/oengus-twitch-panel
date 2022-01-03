@@ -3,19 +3,25 @@ let interval = -1;
 const scheduleLink = document.getElementById('schedule-link');
 
 scheduleLink.addEventListener('click', () => {
-    ga('send', 'event', {
-        eventCategory: 'Click',
-        eventAction: 'ScheduleLinkClick',
-        eventLabel: 'ButtonClickDetail',
-        eventValue: scheduleLink.href,
+    gtag('event', 'ScheduleLinkClick', {
+        'event_category': 'Click',
+        'event_label': scheduleLink.href,
+        'value': scheduleLink.href
     });
 });
 
-ga('send', 'event', {
-    eventCategory: 'Load',
-    eventAction: 'PageLoaded',
-    // eventLabel: 'Label',
-    eventValue: 'home',
+/*
+gtag('event', 'your_event', {
+    'event_category': '',
+    'event_label': '',
+    'value': ''
+});
+*/
+
+gtag('event', 'PageLoaded', {
+    'event_category': 'Page',
+    'event_label': 'ticker',
+    'value': 'ticker',
 });
 
 loadConfig((config) => {
@@ -33,6 +39,12 @@ loadConfig((config) => {
     }
 
     window.marathonId = config.marathonId;
+
+    gtag('event', 'TickerReady', {
+        'event_category': 'Ticker',
+        'event_label': config.marathonId,
+        'non_interaction': true,
+    });
 
     updateTicker();
 

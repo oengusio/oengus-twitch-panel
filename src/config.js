@@ -39,11 +39,10 @@ async function saveConfig() {
             marathonName,
         }));
 
-        ga('send', 'event', {
-            eventCategory: 'config',
-            eventAction: 'ConfigSaved',
-            // eventLabel: 'Label',
-            eventValue: marathonId,
+        gtag('event', 'ConfigSaved', {
+            'event_category': 'config',
+            'event_label': JSON.stringify({ marathonId: marathonId }),
+            // 'value': ''
         });
 
         bulmaToast.toast({
@@ -72,21 +71,20 @@ function disableExtension() {
     saveConfig();
 }
 
-ga('send', 'event', {
-    eventCategory: 'Load',
-    eventAction: 'PageLoaded',
-    // eventLabel: 'Label',
-    eventValue: 'configuration',
+gtag('event', 'PageLoaded', {
+    'event_category': 'Page',
+    'event_label': 'config',
+    'value': 'config',
 });
 
 loadConfig((config) => {
     marathonInput.value = config.marathonId || '';
     marathonNameInput.value = config.marathonName || 'None';
 
-    ga('send', 'event', {
-        eventCategory: 'config',
-        eventAction: 'ConfigLoaded',
-        // eventLabel: 'Label',
-        eventValue: config,
+    gtag('event', 'ConfigLoaded', {
+        'event_category': 'config',
+        // 'event_label': '',
+        'value': JSON.stringify(config),
+        'non_interaction': true,
     });
 });

@@ -9,6 +9,14 @@ function log(...data) {
     Twitch.ext.rig.log(...data);
 }
 
+// setup Google Analytics
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-153189507-5', { 'anonymize_ip': true });
+
+
 document.addEventListener('click', (event) => {
     const target = event.target;
 

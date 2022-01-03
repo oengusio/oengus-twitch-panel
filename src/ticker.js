@@ -63,6 +63,12 @@ function redrawTicker(fromUpdate) {
         updateTicker();
     }*/
 
+    gtag('event', 'TickerRedraw', {
+        'event_category': 'Ticker',
+        'event_label': window.marathonId,
+        'non_interaction': true,
+    });
+
     log('Redrawing ticker');
 
     const target = document.querySelector('.container');
