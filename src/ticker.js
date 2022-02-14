@@ -27,11 +27,14 @@ function insetTemplate(target, data) {
     const clsToAdd = data.next ? 'is-secondary' : 'is-primary';
 
     clone.querySelector('article').classList.add(clsToAdd);
+    const runLink = clone.querySelector('a');
+
+    runLink.dataset.run = data.runId;
 
     if (data.next) {
-        clone.querySelector('a').innerHTML = `Next run ${formatDate(Date.parse(data.date))}`;
+        runLink.innerHTML = `Next run ${formatDate(Date.parse(data.date))}`;
     } else {
-        clone.querySelector('a').innerHTML = 'Current run';
+        runLink.innerHTML = 'Current run';
     }
 
     target.appendChild(clone);
@@ -42,7 +45,7 @@ function updateTicker() {
 
     const marathonId = window.marathonId;
     // TODO: Implement i18n
-    const link = `https://v2.oengus.io/en-GB/marathon/${marathonId}/schedule`;
+    const link = `https://oengus.io/en-GB/marathon/${marathonId}/schedule#current`;
 
     document.getElementById('schedule-link').setAttribute('href', link);
 
@@ -57,11 +60,11 @@ function updateTicker() {
 function redrawTicker(fromUpdate) {
     // TODO: test this properly
     // in case the schedule does not align with current run
-    /*if (!fromUpdate && localstate.next &&
-        localstate.next.gameName !== window.currentGame &&
+    if (!fromUpdate && localstate.next &&
+        /*localstate.next.gameName !== window.currentGame &&*/
         Date.parse(localstate.next.date) < Date.now()) {
         updateTicker();
-    }*/
+    }
 
     gtag('event', 'TickerRedraw', {
         'event_category': 'Ticker',
@@ -82,6 +85,7 @@ function redrawTicker(fromUpdate) {
         if (current.setupBlock) {
             data = {
                 next: false,
+                runId: current.id,
                 runInfo: [
                     current.setupBlockText ?? 'Setup block',
                 ],
@@ -90,6 +94,7 @@ function redrawTicker(fromUpdate) {
         } else {
             data = {
                 next: false,
+                runId: current.id,
                 runInfo: [
                     current.gameName,
                     current.categoryName,
@@ -110,6 +115,7 @@ function redrawTicker(fromUpdate) {
         if (next.setupBlock) {
             data = {
                 next: true,
+                runId: next.id,
                 runInfo: [
                     next.setupBlockText ?? 'Setup block',
                 ],
@@ -118,6 +124,7 @@ function redrawTicker(fromUpdate) {
         } else {
             data = {
                 next: true,
+                runId: next.id,
                 runInfo: [
                     next.gameName,
                     next.categoryName,

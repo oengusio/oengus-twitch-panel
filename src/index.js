@@ -48,8 +48,14 @@ loadConfig((config) => {
 
     updateTicker();
 
-    // update every 60 seconds
-    interval = setInterval(() => {
-        redrawTicker(false);
-    }, 60 * 1000);
+    const curr = new Date();
+    const startInterval = () => {
+        // update every 60 seconds
+        interval = setInterval(() => {
+            redrawTicker(false);
+        }, 30 * 1000);
+    };
+    const secUntilNextMin = 30 - curr.getSeconds();
+    // sync to the computer time
+    setTimeout(startInterval, secUntilNextMin * 1000);
 });

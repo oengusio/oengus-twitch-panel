@@ -27,5 +27,18 @@ document.addEventListener('click', (event) => {
     if (target.dataset.action) {
         // TODO: handle action
         event.preventDefault();
+
+        if (target.dataset.action === 'run-details') {
+            const run = target.dataset.run;
+            const url = `https://oengus.io/en-GB/marathon/${window.marathonId}/schedule#run-${run}`;
+
+            gtag('event', 'RunLinkClick', {
+                'event_category': 'Click',
+                'event_label': `run-${run}`,
+                'value': url
+            });
+
+            window.open(url, '_blank');
+        }
     }
 });

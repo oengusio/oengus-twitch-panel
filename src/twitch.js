@@ -2,9 +2,9 @@ const twitch = window.Twitch.ext;
 window.currentGame = '';
 // window.previousGame = '';
 
-twitch.onAuthorized((auth) => {
+/*twitch.onAuthorized((auth) => {
     // console.log(auth);
-});
+});*/
 
 twitch.onContext((ctx, changed) => {
     // log('changed', changed);

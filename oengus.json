@@ -38,28 +38,6 @@
       "orientation": "Portrait",
       "type": "panel",
       "viewerType": "Broadcaster"
-    },
-    {
-      "channelId": "91097747",
-      "configurationAnchor": "panel",
-      "displayChannelName": "duncte123",
-      "features": {
-        "isBitsEnabled": false,
-        "isChatEnabled": false,
-        "isSubscriptionStatusAvailable": false
-      },
-      "frameSize": {
-        "width": 1280,
-        "height": 720
-      },
-      "id": "2",
-      "isPopout": false,
-      "label": "viewer",
-      "linked": false,
-      "linkedUserId": "",
-      "orientation": "Portrait",
-      "type": "panel",
-      "viewerType": "Logged-In Viewer"
     }
   ],
   "manifest": {
