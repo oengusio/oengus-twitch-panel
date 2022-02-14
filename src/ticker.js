@@ -61,9 +61,11 @@ function redrawTicker(fromUpdate) {
     // TODO: test this properly
     // in case the schedule does not align with current run
     if (!fromUpdate && localstate.next &&
-        /*localstate.next.gameName !== window.currentGame &&*/
+        localstate.next.gameName === window.currentGame &&
         Date.parse(localstate.next.date) < Date.now()) {
+        log('Next run has started, refreshing ticker');
         updateTicker();
+        return;
     }
 
     gtag('event', 'TickerRedraw', {

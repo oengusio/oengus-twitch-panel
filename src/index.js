@@ -55,6 +55,7 @@ loadConfig((config) => {
             redrawTicker(false);
         }, 30 * 1000);
     };
+    // TODO: 30 sec in ms MINUS seconds in ms + ms
     const secUntilNextMin = 30 - curr.getSeconds();
     // sync to the computer time
     setTimeout(startInterval, secUntilNextMin * 1000);
