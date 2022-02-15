@@ -34,8 +34,7 @@ document.addEventListener('click', (event) => {
 
             gtag('event', 'RunLinkClick', {
                 'event_category': 'Click',
-                'event_label': `run-${run}`,
-                'value': url
+                'event_label': window.marathonId,
             });
 
             window.open(url, '_blank');

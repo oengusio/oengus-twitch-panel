@@ -41,8 +41,7 @@ async function saveConfig() {
 
         gtag('event', 'ConfigSaved', {
             'event_category': 'config',
-            'event_label': JSON.stringify({ marathonId: marathonId }),
-            // 'value': ''
+            'event_label': marathonId,
         });
 
         bulmaToast.toast({
@@ -74,7 +73,6 @@ function disableExtension() {
 gtag('event', 'PageLoaded', {
     'event_category': 'Page',
     'event_label': 'config',
-    'value': 'config',
 });
 
 loadConfig((config) => {
@@ -84,7 +82,6 @@ loadConfig((config) => {
     gtag('event', 'ConfigLoaded', {
         'event_category': 'config',
         // 'event_label': '',
-        'value': JSON.stringify(config),
         'non_interaction': true,
     });
 });

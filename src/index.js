@@ -3,25 +3,26 @@ let interval = -1;
 const scheduleLink = document.getElementById('schedule-link');
 
 scheduleLink.addEventListener('click', () => {
-    gtag('event', 'ScheduleLinkClick', {
-        'event_category': 'Click',
-        'event_label': scheduleLink.href,
-        'value': scheduleLink.href
-    });
+    if (window.marathonId) {
+        gtag('event', 'ScheduleLinkClick', {
+            'event_category': 'Click',
+            'event_label': window.marathonId,
+        });
+    }
 });
 
 /*
 gtag('event', 'your_event', {
+    'event_action': '',
     'event_category': '',
     'event_label': '',
-    'value': ''
+    'value': '' (value is a number)
 });
 */
 
 gtag('event', 'PageLoaded', {
     'event_category': 'Page',
     'event_label': 'ticker',
-    'value': 'ticker',
 });
 
 loadConfig((config) => {
