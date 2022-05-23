@@ -1,4 +1,5 @@
 let interval = -1;
+let timeout = -1;
 
 const scheduleLink = document.getElementById('schedule-link');
 
@@ -27,11 +28,12 @@ gtag('event', 'PageLoaded', {
 
 loadConfig((config) => {
     if (interval > -1) {
-        interval = -1;
         clearInterval(interval);
+        interval = -1;
     }
 
     if (!config.marathonId) {
+        clearTimeout(timeout);
         // reset the link in case of a config update
         scheduleLink.setAttribute('href', 'https://oengus.io/');
         document.querySelector('.container').innerHTML = '<p>Extension not configured!</p>' +
@@ -59,5 +61,5 @@ loadConfig((config) => {
     // TODO: 30 sec in ms MINUS seconds in ms + ms
     const secUntilNextMin = 30 - curr.getSeconds();
     // sync to the computer time
-    setTimeout(startInterval, secUntilNextMin * 1000);
+    timeout = setTimeout(startInterval, secUntilNextMin * 1000);
 });

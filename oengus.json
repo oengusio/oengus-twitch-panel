@@ -38,6 +38,28 @@
       "orientation": "Portrait",
       "type": "panel",
       "viewerType": "Broadcaster"
+    },
+    {
+      "channelId": "91097747",
+      "configurationAnchor": "panel",
+      "displayChannelName": "duncte123",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "3",
+      "isPopout": false,
+      "label": "config",
+      "linked": true,
+      "linkedUserId": "265737932",
+      "orientation": "Portrait",
+      "type": "config",
+      "viewerType": "Broadcaster"
     }
   ],
   "manifest": {
@@ -75,7 +97,7 @@
     "summary": "Provides current run info directly on twitch",
     "supportEmail": "contact@oengus.io",
     "vendorCode": "",
-    "version": "0.03",
+    "version": "0.0.4",
     "viewerSummary": "Provides current run info directly on twitch",
     "viewerUrl": "https://localhost:8080/index.html",
     "viewerUrls": {

@@ -27,17 +27,19 @@ async function saveConfig() {
     let marathonName = null;
 
     try {
-        if (marathonId !== '') {
+        if (marathonId) {
             marathonName = await getMarathonName(marathonId);
             marathonNameInput.value = marathonName;
         } else {
             marathonNameInput.value = 'None';
         }
 
-        twitch.configuration.set('broadcaster', '1.0', JSON.stringify({
+        const newConfig = {
             marathonId: marathonId,
             marathonName,
-        }));
+        };
+
+        updateTwitchConfig(newConfig);
 
         gtag('event', 'ConfigSaved', {
             'event_category': 'config',
