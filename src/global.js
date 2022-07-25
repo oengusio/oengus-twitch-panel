@@ -4,6 +4,8 @@ function _(sel) {
     return sel.includes('#') ? res[0] : res;
 }
 
+window.oengusDomain = 'oengus.io';
+
 function log(...data) {
     console.log('[oengus]', ...data);
     Twitch.ext.rig.log(...data);
@@ -30,7 +32,7 @@ document.addEventListener('click', (event) => {
 
         if (target.dataset.action === 'run-details') {
             const run = target.dataset.run;
-            const url = `https://oengus.io/en-GB/marathon/${window.marathonId}/schedule#run-${run}`;
+            const url = `https://${window.oengusDomain}/marathon/${window.marathonId}/schedule#run-${run}`;
 
             gtag('event', 'RunLinkClick', {
                 'event_category': 'Click',

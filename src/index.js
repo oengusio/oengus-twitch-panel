@@ -42,6 +42,7 @@ loadConfig((config) => {
     }
 
     window.marathonId = config.marathonId;
+    window.oengusDomain = config.domain;
 
     gtag('event', 'TickerReady', {
         'event_category': 'Ticker',

@@ -1,6 +1,17 @@
 const marathonInput = _('#marathon');
 const marathonNameInput = _('#marathon_name');
+const domainSelect = _('#domainSelector');
 
+// Allow myself to use oengus.dev
+// Just so that I don't have to mess with sandbox or prod.
+if (document.location.host === 'localhost:8080') {
+    const devOption = document.createElement('option');
+
+    devOption.setAttribute('value', 'oengus.dev');
+    devOption.innerHTML = 'oengus.dev';
+
+    domainSelect.appendChild(devOption);
+}
 
 _('#config-form').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -24,7 +35,11 @@ async function saveConfig() {
     });
 
     const marathonId = marathonInput.value;
+    const oengusDomain = domainSelect.value;
     let marathonName = null;
+
+    // Set the domain here so that we can fetch the info from the correct api
+    window.oengusDomain = oengusDomain;
 
     try {
         if (marathonId) {
@@ -36,6 +51,7 @@ async function saveConfig() {
 
         const newConfig = {
             marathonId: marathonId,
+            domain: oengusDomain,
             marathonName,
         };
 
@@ -80,6 +96,8 @@ gtag('event', 'PageLoaded', {
 loadConfig((config) => {
     marathonInput.value = config.marathonId || '';
     marathonNameInput.value = config.marathonName || 'None';
+    window.oengusDomain = config.domain || 'oengus.io';
+    domainSelect.value = window.oengusDomain;
 
     gtag('event', 'ConfigLoaded', {
         'event_category': 'config',

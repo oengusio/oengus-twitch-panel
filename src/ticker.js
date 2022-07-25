@@ -30,6 +30,7 @@ function insetTemplate(target, data) {
     const runLink = clone.querySelector('a');
 
     runLink.dataset.run = data.runId;
+    runLink.setAttribute('href', `#/runs/${data.runId}`);
 
     if (data.next) {
         runLink.innerHTML = `Next run ${formatDate(Date.parse(data.date))}`;
@@ -67,21 +68,33 @@ function updateTicker() {
 }
 
 function redrawTicker(fromUpdate) {
-    // TODO: test this properly
-    // in case the schedule does not align with current run
+    if (localstate.next) {
+        const nextHasStarted = Date.parse(localstate.next.date) < Date.now();
 
-    // TODO: compare game names, what should the threshold be?
-    const distance = levenshtein(localstate.next.gameName, window.currentGame);
+        // Update the ticker if the next run has already started
+        if (!fromUpdate && nextHasStarted) {
+            updateTicker();
+            return;
+        }
 
-    // TODO: could probably test this during the next bsg
-    log(`Comparing '${localstate.next.gameName}' to '${window.currentGame}':`, distance)
+        // in case the schedule does not align with current run
+        const nextGameToTwitch = similarity(localstate.next.gameName, window.currentGame);
 
-    if (!fromUpdate && localstate.next &&
-        localstate.next.gameName === window.currentGame &&
-        Date.parse(localstate.next.date) < Date.now()) {
-        log('Next run has started, refreshing ticker');
-        updateTicker();
-        return;
+        log(`Comparing '${localstate.next.gameName}' to '${window.currentGame}':`, nextGameToTwitch)
+
+        // if we are not from an update (prevent infinite loops)
+        // AND
+        // The current game on twitch matches
+        // OR
+        // The next run has started
+        // Set the next game as the current game
+        if (!fromUpdate && (
+            nextGameToTwitch >= 0.50 || nextHasStarted
+        )) {
+            log('Forcing next run to be current');
+            localstate.current = localstate.next;
+            localstate.next = null;
+        }
     }
 
     log('Redrawing ticker');
@@ -149,108 +162,4 @@ function redrawTicker(fromUpdate) {
 
         insetTemplate(target, data);
     }
-}
-
-// source https://stackoverflow.com/a/35279162/4807235
-/**
- *
- * @param s Source
- * @param t Target
- * @returns {number|*}
- */
-function levenshtein(s, t) {
-    if (s === t) {
-        return 0;
-    }
-    const n = s.length, m = t.length;
-    if (n === 0 || m === 0) {
-        return n + m;
-    }
-    let x = 0, y, a, b, c, d, g, h;
-    const p = new Uint16Array(n);
-    const u = new Uint32Array(n);
-    for (y = 0; y < n;) {
-        u[y] = s.charCodeAt(y);
-        p[y] = ++y;
-    }
-
-    for (; (x + 3) < m; x += 4) {
-        const e1 = t.charCodeAt(x);
-        const e2 = t.charCodeAt(x + 1);
-        const e3 = t.charCodeAt(x + 2);
-        const e4 = t.charCodeAt(x + 3);
-        c = x;
-        b = x + 1;
-        d = x + 2;
-        g = x + 3;
-        h = x + 4;
-        for (y = 0; y < n; y++) {
-            a = p[y];
-            if (a < c || b < c) {
-                c = (a > b ? b + 1 : a + 1);
-            }
-            else {
-                if (e1 !== u[y]) {
-                    c++;
-                }
-            }
-
-            if (c < b || d < b) {
-                b = (c > d ? d + 1 : c + 1);
-            }
-            else {
-                if (e2 !== u[y]) {
-                    b++;
-                }
-            }
-
-            if (b < d || g < d) {
-                d = (b > g ? g + 1 : b + 1);
-            }
-            else {
-                if (e3 !== u[y]) {
-                    d++;
-                }
-            }
-
-            if (d < g || h < g) {
-                g = (d > h ? h + 1 : d + 1);
-            }
-            else {
-                if (e4 !== u[y]) {
-                    g++;
-                }
-            }
-            p[y] = h = g;
-            g = d;
-            d = b;
-            b = c;
-            c = a;
-        }
-    }
-
-    for (; x < m;) {
-        const e = t.charCodeAt(x);
-        c = x;
-        d = ++x;
-        for (y = 0; y < n; y++) {
-            a = p[y];
-            if (a < c || d < c) {
-                d = (a > d ? d + 1 : a + 1);
-            }
-            else {
-                if (e !== u[y]) {
-                    d = c + 1;
-                }
-                else {
-                    d = c;
-                }
-            }
-            p[y] = d;
-            c = a;
-        }
-        h = d;
-    }
-
-    return h;
 }

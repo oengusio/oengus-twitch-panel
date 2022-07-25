@@ -44,9 +44,9 @@ function fetchGameFromApi(auth) {
     })
         .then((r) => r.json())
         .then((json) => {
-            // log('json', json);
             if (json.data && json.data.length) {
                 window.currentGame = json.data[0].game_name;
+                redrawTicker(false);
             }
             log('Current game is', window.currentGame);
         }).catch(e => log(e));
