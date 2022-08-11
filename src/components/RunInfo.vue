@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
 import type { PropType } from 'vue';
 import type { TickerRun } from '@/types/OengusTypes';
-import {formatDate} from '@/helpers/timehelper';
+import { formatDate } from '@/helpers/timehelper';
 
 export default defineComponent({
   name: 'run-info',
