@@ -1,0 +1,16 @@
+@import "./base.scss";
+
+html {
+  overflow-y: auto !important;
+}
+
+body {
+  padding: 10px !important;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+}
