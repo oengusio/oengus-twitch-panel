@@ -2,15 +2,13 @@
 // twitch provides a locale to us
 // const locale = (new URL(document.location)).searchParams.get('locale');
 // TODO: change to correct locale, use en for consistency for now
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 const format = new Intl.RelativeTimeFormat('en-GB');
 
 export function formatDate(datetime: Date | string | number): string {
   const date = new Date(datetime).getTime();
   // seconds
   let diff = (date - Date.now()) / 1000;
-  let unit = 'second';
+  let unit: Intl.RelativeTimeFormatUnit = 'second';
 
   if (Math.abs(diff) > 89) {
     diff /= 60;
