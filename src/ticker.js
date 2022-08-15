@@ -80,7 +80,7 @@ function redrawTicker(fromUpdate) {
         // in case the schedule does not align with current run
         const nextGameToTwitch = similarity(localstate.next.gameName, window.currentGame);
 
-        log(`Comparing '${localstate.next.gameName}' to '${window.currentGame}':`, nextGameToTwitch)
+        // log(`Comparing '${localstate.next.gameName}' to '${window.currentGame}':`, nextGameToTwitch)
 
         // if we are not from an update (prevent infinite loops)
         // AND
