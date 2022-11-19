@@ -2,14 +2,17 @@
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import { useConfigStore } from '@/stores/config';
-import { mapState } from 'pinia';
 
 export default defineComponent({
   components: {
     RouterView,
   },
-  computed: {
-    ...mapState(useConfigStore, ['loaded']),
+  setup() {
+    const configStore = useConfigStore();
+
+    return {
+      configStore,
+    };
   },
 });
 </script>
@@ -27,7 +30,7 @@ export default defineComponent({
 
   <footer>
     <!-- TODO: Change wording depending on schedule status -->
-    <p v-if="loaded">
+    <p v-if="configStore.loaded">
       <a href="https://oengus.io/" target="_blank">
         View the full schedule on
         <img class="brandLogo" src="@/assets/logo.svg" alt="Oengus.io" />

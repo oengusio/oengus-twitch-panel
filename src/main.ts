@@ -15,9 +15,15 @@ app.use(createPinia());
 app.use(router);
 
 // TODO: remove, only for testing
+// TODO: load settings from twitch
 const configStore = useConfigStore();
+
+await configStore.loadSettingsFromTwitch();
+
 const runStore = useRunStore();
 const short = configStore.marathonConfig.marathonId || '';
+
+oengusApi.oengusDomain = 'oengus.dev';
 
 oengusApi.getTickerData(short).then((data) => {
   const { current, next } = data;

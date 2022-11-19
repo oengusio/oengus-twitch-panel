@@ -24,5 +24,8 @@ export const useConfigStore = defineStore({
       this.marathonConfig = newConfig;
       this.loaded = true;
     },
+    async loadSettingsFromTwitch(): Promise<void> {
+      return;
+    },
   },
 });

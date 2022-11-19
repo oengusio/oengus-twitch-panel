@@ -1,10 +1,10 @@
 import type { TickerData } from '@/types/OengusTypes';
 
 class OengusAPI {
-  private readonly apiBase: string;
+  public oengusDomain = 'oengus.io';
 
-  constructor(private oengusDomain: string) {
-    this.apiBase = `https://${oengusDomain}/api/v1`;
+  private get apiBase(): string {
+    return `https://${this.oengusDomain}/api/v1`;
   }
 
   public async getTickerData(shortCode: string): Promise<TickerData> {
@@ -21,4 +21,4 @@ class OengusAPI {
   }
 }
 
-export const oengusApi = new OengusAPI('oengus.io');
+export const oengusApi = new OengusAPI();

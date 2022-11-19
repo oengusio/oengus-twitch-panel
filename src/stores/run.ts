@@ -8,7 +8,9 @@ export const useRunStore = defineStore({
     current: null as TickerRun | null,
   }),
   getters: {
-    //
+    hasRuns(): boolean {
+      return this.next !== null && this.current !== null;
+    },
   },
   actions: {
     //

@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useConfigStore } from '@/stores/config';
-import { mapStores } from 'pinia';
 import { useRunStore } from '@/stores/run';
 import RunInfo from '@/components/RunInfo.vue';
 
@@ -10,9 +9,15 @@ export default defineComponent({
   components: {
     RunInfo,
   },
-  data: () => ({
-    //
-  }),
+  setup() {
+    const configStore = useConfigStore();
+    const runStore = useRunStore();
+
+    return {
+      runStore,
+      configStore,
+    };
+  },
   watch: {
     'configStore.marathonConfig': {
       deep: true,
@@ -23,9 +28,6 @@ export default defineComponent({
       },
     },
   },
-  computed: {
-    ...mapStores(useConfigStore, useRunStore),
-  },
 });
 </script>
 
@@ -34,8 +36,10 @@ export default defineComponent({
     <p>
       Loaded for id <code>{{ configStore.marathonConfig.marathonId }}</code>
     </p>
-    <RunInfo v-if="runStore.current" :data="runStore.current" />
-    <RunInfo v-if="runStore.next" next :data="runStore.next" />
+    <template v-if="runStore.hasRuns">
+      <RunInfo v-if="runStore.current" :data="runStore.current" />
+      <RunInfo v-if="runStore.next" next :data="runStore.next" />
+    </template>
   </div>
   <p v-else>Loading ...</p>
 </template>
