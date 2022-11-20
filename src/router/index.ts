@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/runner/:name',
       name: 'runner-details',
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('../views/RunnerView.vue'),
     },
   ],
 });

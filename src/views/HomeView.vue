@@ -19,11 +19,11 @@ export default defineComponent({
     };
   },
   watch: {
-    'configStore.marathonConfig': {
+    'configStore.marathonConfig.marathonId': {
       deep: true,
       handler() {
         console.log(
-          `New marathon id: ${this.configStore.marathonConfig.marathonId}`
+          `[oengus] New marathon id: ${this.configStore.marathonConfig.marathonId}`
         );
       },
     },

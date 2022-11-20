@@ -9,7 +9,7 @@ export const useRunStore = defineStore({
   }),
   getters: {
     hasRuns(): boolean {
-      return this.next !== null && this.current !== null;
+      return this.next !== null || this.current !== null;
     },
   },
   actions: {

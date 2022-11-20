@@ -31,7 +31,7 @@ export default defineComponent({
   <footer>
     <!-- TODO: Change wording depending on schedule status -->
     <p v-if="configStore.loaded">
-      <a href="https://oengus.io/" target="_blank">
+      <a :href="`https://oengus.io/marathon/${configStore.marathonConfig.marathonId}/schedule`" target="_blank">
         View the full schedule on
         <img class="brandLogo" src="@/assets/logo.svg" alt="Oengus.io" />
       </a>
