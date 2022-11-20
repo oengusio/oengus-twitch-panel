@@ -1,5 +1,9 @@
 @import "./base.scss";
 
+* {
+  --twitch-purple: #9146FF;
+}
+
 html {
   overflow-y: auto !important;
 }

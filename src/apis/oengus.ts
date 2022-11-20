@@ -16,6 +16,10 @@ class OengusAPI {
     return `https://${this.oengusDomain}/api/v1`;
   }
 
+  public getAvatarUrl(username: string): string {
+    return `${this.apiBase}/users/${username}/avatar`;
+  }
+
   public async getUserInfo(username: string): Promise<RunnerInfo | null> {
     const res = await fetch(`${this.apiBase}/users/${username}`, {
       headers: {
