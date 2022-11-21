@@ -33,6 +33,7 @@ export default defineComponent({
 
 <template>
   <div v-if="configStore.loaded">
+    <h1>Marathon Name here</h1>
     <template v-if="runStore.hasRuns">
       <RunInfo v-if="runStore.current" :data="runStore.current" />
       <RunInfo v-if="runStore.next" next :data="runStore.next" />
