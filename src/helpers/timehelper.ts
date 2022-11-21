@@ -4,7 +4,7 @@
 // TODO: change to correct locale, use en for consistency for now
 const format = new Intl.RelativeTimeFormat('en-GB');
 
-export function formatDate(datetime: Date | string | number): string {
+export function getTimeDistance(datetime: Date | string | number): string {
   const date = new Date(datetime).getTime();
   // seconds
   let diff = (date - Date.now()) / 1000;

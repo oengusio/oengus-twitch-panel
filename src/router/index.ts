@@ -12,7 +12,8 @@ const router = createRouter({
     {
       path: '/line/:id',
       name: 'line-details',
-      component: () => import('../views/AboutView.vue'),
+      props: true,
+      component: () => import('../views/RunFocusView.vue'),
     },
     {
       path: '/line/:id/runners',

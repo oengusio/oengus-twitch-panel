@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 import { useConfigStore } from '@/stores/config';
 import { useRunStore } from '@/stores/run';
-import RunInfo from '@/components/RunInfo.vue';
+import RunInfo from '@/components/run/RunInfo.vue';
 
 export default defineComponent({
   name: 'home-view',
@@ -33,13 +33,11 @@ export default defineComponent({
 
 <template>
   <div v-if="configStore.loaded">
-    <p>
-      Loaded for id <code>{{ configStore.marathonConfig.marathonId }}</code>
-    </p>
     <template v-if="runStore.hasRuns">
       <RunInfo v-if="runStore.current" :data="runStore.current" />
       <RunInfo v-if="runStore.next" next :data="runStore.next" />
     </template>
+    <p v-else>No more runs :(</p>
   </div>
   <p v-else>Loading ...</p>
 </template>

@@ -26,6 +26,7 @@ export interface TickerRun {
   categoryName: string | null;
   estimate: string;
   setupBlock: boolean;
+  setupTime: string | null;
   customRun: boolean;
   position: number;
   categoryId: number | null;
