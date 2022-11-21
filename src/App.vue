@@ -51,12 +51,4 @@ img.brandLogo {
   position: relative;
   bottom: -3px;
 }
-
-.run-info > span:not(:last-of-type)::after {
-  content: ' - ';
-}
-
-.runner-info > span:not(:last-of-type)::after {
-  content: ', ';
-}
 </style>

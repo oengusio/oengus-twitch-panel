@@ -15,9 +15,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/runner/:name',
-      name: 'runner-details',
+      path: '/line/:id/runners',
+      name: 'line-runner-details',
       component: () => import('../views/RunnerView.vue'),
+    },
+    {
+      path: '/config',
+      name: 'config',
+      component: () => import('../views/ConfigView.vue'),
     },
   ],
 });

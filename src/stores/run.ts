@@ -13,6 +13,16 @@ export const useRunStore = defineStore({
     },
   },
   actions: {
-    //
+    getLineById(id: number): TickerRun | null {
+      if (this.current && this.current.id === id) {
+        return this.current;
+      }
+
+      if (this.next && this.next.id === id) {
+        return this.next;
+      }
+
+      return null;
+    },
   },
 });
