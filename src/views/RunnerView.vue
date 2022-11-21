@@ -1,11 +1,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import type { TickerRun, RunnerInfo } from '@/types/OengusTypes';
-import { oengusApi } from '@/apis/oengus';
+import type { TickerRun } from '@/types/OengusTypes';
 import { useRunStore } from '@/stores/run';
+import RunnerInfoComponent from '@/components/runner/RunnerInfo.vue';
 
 export default defineComponent({
   name: 'runner-view',
+  components: {
+    RunnerInfoComponent,
+  },
   setup() {
     const scheduleLine = ref<TickerRun | null>(null);
     const runStore = useRunStore();
@@ -27,18 +30,7 @@ export default defineComponent({
     //
   },
   methods: {
-    followOnTwitch(runner: RunnerInfo) {
-      //
-    },
-    getAvatarUrl(runner: RunnerInfo): string {
-      return oengusApi.getAvatarUrl(runner.username);
-    },
-    getTwitchUsername(runner: RunnerInfo): string {
-      return (
-        runner.connections.find((c) => c.platform === 'TWITCH')?.username ||
-        'fake_username'
-      );
-    },
+    //
   },
 });
 </script>
@@ -47,39 +39,16 @@ export default defineComponent({
   <div>
     <!-- TODO: font-awesome back icon -->
     <router-link to="/">&laquo; Go back</router-link>
-    <div v-if="scheduleLine" class="columns">
-      <div class="column" v-for="runner in scheduleLine.runners" :key="runner.id">
-        <div class="card">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img :src="getAvatarUrl(runner)" />
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-4">{{ runner.username }}</p>
-                <p class="subtitle is-6">@{{ getTwitchUsername(runner) }}</p>
-              </div>
-            </div>
-
-            <div class="content">
-              <button @click="followOnTwitch(runner)" class="follow-btn">
-                Follow
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div v-if="scheduleLine" class="columns is-gapless">
+      <RunnerInfoComponent
+        v-for="runner in scheduleLine.runners"
+        :key="runner.id"
+        :runner="runner"
+      />
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.follow-btn {
-  background-color: var(--twitch-purple);
-  color: white;
-  font-size: 2em;
-  border: none;
-}
+//
 </style>

@@ -32,8 +32,6 @@ configStore.$patch({
 const runStore = useRunStore();
 const short = configStore.marathonConfig.marathonId || '';
 
-// oengusApi.oengusDomain = 'oengus.dev';
-
 oengusApi.getTickerData(short).then((data) => {
   if (data === null) {
     return;
