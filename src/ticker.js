@@ -56,10 +56,14 @@ function updateTicker() {
 
         if (!current && !next) {
             log('Ticker data missing, clearing config');
+            const target = document.querySelector('.container');
+
+            target.innerHTML = `<p>No more runs :(</p>`;
+
             updateTwitchConfig({
                 marathonId: null,
                 marathonName: null,
-            });
+            }, false);
             return;
         }
 
@@ -102,6 +106,11 @@ function redrawTicker(fromUpdate) {
     const target = document.querySelector('.container');
 
     target.innerHTML = '';
+
+    if (!localstate.next && !localstate.current) {
+        target.innerHTML = `<p>No more runs :(</p>`;
+        return;
+    }
 
     if (localstate.current) {
         const current = localstate.current;

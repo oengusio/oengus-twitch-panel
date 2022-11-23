@@ -1,16 +1,19 @@
 const twitch = window.Twitch.ext;
 let configCallback = () => {};
+window.listenForUpdates = true;
 window.currentGame = '';
 // window.previousGame = '';
 
-function updateTwitchConfig(config) {
+function updateTwitchConfig(config, broadcast = true) {
     twitch.configuration.set('broadcaster', '1.0', JSON.stringify(config));
 
-    // notify the extension about the updated config
-    twitch.send('broadcast', 'application/json', {
-        type: 'CONFIG_UPDATE',
-        config,
-    });
+    if (broadcast) {
+        // notify the extension about the updated config
+        twitch.send('broadcast', 'application/json', {
+            type: 'CONFIG_UPDATE',
+            config,
+        });
+    }
 }
 
 twitch.listen('broadcast', (target, contentType, message) => {
@@ -19,7 +22,9 @@ twitch.listen('broadcast', (target, contentType, message) => {
 
     switch (msg.type) {
         case 'CONFIG_UPDATE':
-            configCallback(msg.config);
+            if (window.listenForUpdates) {
+                configCallback(msg.config);
+            }
             break;
     }
 });
@@ -46,7 +51,10 @@ function fetchGameFromApi(auth) {
         .then((json) => {
             if (json.data && json.data.length) {
                 window.currentGame = json.data[0].game_name;
-                redrawTicker(false);
+
+                if (redrawTicker) {
+                    redrawTicker(false);
+                }
             }
             log('Current game is', window.currentGame);
         }).catch(e => log(e));
