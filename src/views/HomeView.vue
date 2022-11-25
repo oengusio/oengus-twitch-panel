@@ -4,6 +4,7 @@ import { useConfigStore } from '@/stores/config';
 import { useRunStore } from '@/stores/run';
 import RunInfo from '@/components/run/RunInfo.vue';
 
+// TODO: mount,beforeUnmount hooks for starting and stopping the timer
 export default defineComponent({
   name: 'home-view',
   components: {
@@ -18,22 +19,12 @@ export default defineComponent({
       configStore,
     };
   },
-  watch: {
-    'configStore.marathonConfig.marathonId': {
-      deep: true,
-      handler() {
-        console.log(
-          `[oengus] New marathon id: ${this.configStore.marathonConfig.marathonId}`
-        );
-      },
-    },
-  },
 });
 </script>
 
 <template>
   <div v-if="configStore.loaded">
-    <h1>Marathon Name here</h1>
+    <h1 class="subtitle">{{ configStore.marathonConfig.marathonName }}</h1>
     <template v-if="runStore.hasRuns">
       <RunInfo v-if="runStore.current" :data="runStore.current" />
       <RunInfo v-if="runStore.next" next :data="runStore.next" />

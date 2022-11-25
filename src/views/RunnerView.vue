@@ -37,8 +37,8 @@ export default defineComponent({
 
 <template>
   <div>
-    <!-- TODO: font-awesome back icon -->
     <router-link to="/">&laquo; Go back</router-link>
+    <h1 class="subtitle">Follow the runner(s)</h1>
     <div v-if="scheduleLine" class="columns is-gapless">
       <RunnerInfoComponent
         v-for="runner in scheduleLine.runners"

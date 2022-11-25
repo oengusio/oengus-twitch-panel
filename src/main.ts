@@ -17,15 +17,16 @@ app.use(router);
 oengusApi.subscribeToStore();
 
 // TODO: remove, only for testing
-// TODO: load settings from twitch
 const configStore = useConfigStore();
 
 await configStore.loadSettingsFromTwitch();
 
+// TODO: remove after settings page is created
 configStore.$patch({
   marathonConfig: {
     domain: 'oengus.dev',
     marathonId: 'caching',
+    marathonName: 'Testing the cache',
   },
 });
 

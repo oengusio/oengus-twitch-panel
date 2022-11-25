@@ -65,4 +65,8 @@ export default defineComponent({
   font-size: 2em;
   border: none;
 }
+
+.media-content {
+  overflow: hidden;
+}
 </style>

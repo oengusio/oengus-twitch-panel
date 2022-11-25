@@ -1,17 +1,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
-import { useConfigStore } from '@/stores/config';
+import HomeFooter from '@/components/HomeFooter.vue';
 
 export default defineComponent({
   components: {
     RouterView,
+    HomeFooter,
   },
   setup() {
-    const configStore = useConfigStore();
-
     return {
-      configStore,
+      //
     };
   },
 });
@@ -28,27 +27,9 @@ export default defineComponent({
     </div>
   </main>
 
-  <footer>
-    <!-- TODO: Change wording depending on schedule status -->
-    <p v-if="configStore.loaded">
-      <a :href="`https://oengus.io/marathon/${configStore.marathonConfig.marathonId}/schedule`" target="_blank">
-        View the full schedule on
-        <img class="brandLogo" src="@/assets/logo.svg" alt="Oengus.io" />
-      </a>
-    </p>
-    <p v-else>
-      <a href="https://oengus.io/" target="_blank">
-        Powered by
-        <img class="brandLogo" src="@/assets/logo.svg" alt="Oengus.io" />
-      </a>
-    </p>
-  </footer>
+  <HomeFooter />
 </template>
 
-<style scoped>
-img.brandLogo {
-  height: 1.3em;
-  position: relative;
-  bottom: -3px;
-}
+<style scoped lang="scss">
+//
 </style>

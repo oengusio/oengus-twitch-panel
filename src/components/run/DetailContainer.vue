@@ -48,7 +48,7 @@
     <span class="is-label">Link</span>
     <!-- TODO: use helper to select correct domain and template url -->
     <a
-      :href="`https://oengus.io/marathon/${marathonId}/schedule#run-${run.id}`"
+      :href="`https://${oengusDomain}/marathon/${marathonId}/schedule#run-${run.id}`"
       target="_blank"
       rel="nofollow"
     >
@@ -65,6 +65,7 @@ import type { TickerRun } from '@/types/OengusTypes';
 import ElementConsole from '@/components/stolen-from-main-site/ElementConsole.vue';
 import { getTimeDistance } from '@/helpers/timehelper';
 import { duration } from '@/helpers/durationParser';
+import { useConfigStore } from '@/stores/config';
 
 export default defineComponent({
   components: {
@@ -80,6 +81,13 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    const configStore = useConfigStore();
+
+    return {
+      configStore,
+    };
+  },
   methods: {
     dateDistance(d: string | number | Date) {
       return getTimeDistance(d);
@@ -92,6 +100,11 @@ export default defineComponent({
       const d = new Date(date);
       const h = (i: number) => (i < 9 ? `0${i}` : `${i}`);
       return `${h(d.getHours())}:${h(d.getMinutes())}`;
+    },
+  },
+  computed: {
+    oengusDomain(): string {
+      return this.configStore.marathonConfig.domain;
     },
   },
 });
