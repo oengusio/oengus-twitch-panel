@@ -2,6 +2,9 @@ const marathonInput = _('#marathon');
 const marathonNameInput = _('#marathon_name');
 const domainSelect = _('#domainSelector');
 
+// we don't want to update the UI when the config is saved
+window.listenForUpdates = false;
+
 // Allow myself to use oengus.dev
 // Just so that I don't have to mess with sandbox or prod.
 if (document.location.host === 'localhost:8080') {
