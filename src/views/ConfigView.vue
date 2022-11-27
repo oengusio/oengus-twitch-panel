@@ -41,7 +41,8 @@ export default defineComponent({
   },
   methods: {
     clearExt() {
-      //
+      this.marathonId = '';
+      this.save();
     },
     async save(): Promise<void> {
       bulmaToast.toast({
