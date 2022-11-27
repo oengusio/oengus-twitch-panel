@@ -20,8 +20,14 @@ class OengusAPI {
     return `${this.apiBase}/users/${username}/avatar`;
   }
 
-  public async getMarathonName(short: string): Promise<string> {
-    const res = await fetch(`${this.apiBase}/marathons/${short}`, {
+  public async getMarathonName(short: string, domain = ''): Promise<string> {
+    let base = this.apiBase;
+
+    if (domain) {
+      base = base.replace(this.oengusDomain, domain);
+    }
+
+    const res = await fetch(`${base}/marathons/${short}`, {
       headers: {
         'User-Agent': 'OengusIO Twitch Panel',
       },

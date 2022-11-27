@@ -24,26 +24,28 @@ const configStore = useConfigStore();
 await configStore.loadSettingsFromTwitch();
 
 // TODO: remove after settings page is created
-configStore.$patch({
-  marathonConfig: {
-    domain: 'oengus.dev',
-    marathonId: 'caching',
-    marathonName: 'Testing the cache',
-  },
-});
+// configStore.$patch({
+//   marathonConfig: {
+//     domain: 'oengus.dev',
+//     marathonId: 'caching',
+//     marathonName: 'Testing the cache',
+//   },
+// });
 
 const runStore = useRunStore();
 const short = configStore.marathonConfig.marathonId || '';
 
-oengusApi.getTickerData(short).then((data) => {
-  if (data === null) {
-    return;
-  }
+if (short) {
+  oengusApi.getTickerData(short).then((data) => {
+    if (data === null) {
+      return;
+    }
 
-  const { current, next } = data;
+    const { current, next } = data;
 
-  runStore.$patch({ current, next });
-});
+    runStore.$patch({ current, next });
+  });
+}
 // TODO: end of section
 
 app.mount('#app');

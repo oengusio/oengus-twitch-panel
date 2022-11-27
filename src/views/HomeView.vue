@@ -20,10 +20,10 @@ export default defineComponent({
     };
   },
   mounted() {
-    window.gtag('event', 'PageLoaded', {
+    /*window.gtag('event', 'PageLoaded', {
       event_category: 'Page',
       event_label: 'home',
-    });
+    });*/
   },
 });
 </script>

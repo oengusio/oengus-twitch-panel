@@ -31,10 +31,10 @@ export default defineComponent({
     };
   },
   mounted() {
-    window.gtag('event', 'PageLoaded', {
+    /*window.gtag('event', 'PageLoaded', {
       event_category: 'Page',
       event_label: 'config',
-    });
+    });*/
   },
   computed: {
     //
@@ -56,10 +56,15 @@ export default defineComponent({
 
       try {
         if (this.marathonId) {
-          this.marathonName = await oengusApi.getMarathonName(this.marathonId);
+          this.marathonName = await oengusApi.getMarathonName(
+            this.marathonId,
+            this.domain
+          );
         } else {
           this.marathonName = 'None';
         }
+
+        console.log(this.marathonName);
 
         this.configStore.updateConfig({
           marathonId: this.marathonId,
@@ -67,10 +72,10 @@ export default defineComponent({
           domain: this.domain,
         });
 
-        window.gtag('event', 'ConfigSaved', {
+        /*window.gtag('event', 'ConfigSaved', {
           event_category: 'config',
           event_label: this.marathonId,
-        });
+        });*/
 
         // TODO: fork and fix
         bulmaToast.toast({
@@ -83,7 +88,7 @@ export default defineComponent({
         });
       } catch (e) {
         bulmaToast.toast({
-          duration: -1,
+          duration: 9999999999,
           single: true,
           message: `No marathon with id "${this.marathonId}" found.`,
           type: 'is-warning',
@@ -112,7 +117,7 @@ export default defineComponent({
                 <input
                   class="input is-static"
                   type="text"
-                  v-model="marathonName"
+                  :value="marathonName"
                   readonly
                 />
               </p>

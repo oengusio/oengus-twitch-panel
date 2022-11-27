@@ -52,6 +52,7 @@ export function loadTwitchConfig(callback: ConfigLambda): void {
   // we can use this to check for the config being loaded
   Twitch.ext.configuration.onChanged(() => {
     console.log('[oengus] Config updated');
+    console.log(getParsedConfig());
     configCallback(getParsedConfig());
   });
 }
