@@ -20,6 +20,22 @@ class OengusAPI {
     return `${this.apiBase}/users/${username}/avatar`;
   }
 
+  public async getMarathonName(short: string): Promise<string> {
+    const res = await fetch(`${this.apiBase}/marathons/${short}`, {
+      headers: {
+        'User-Agent': 'OengusIO Twitch Panel',
+      },
+    });
+
+    if (res.status === 404) {
+      throw new Error('Marathon now found');
+    }
+
+    const json = await res.json();
+
+    return json.name as string;
+  }
+
   public async getUserInfo(username: string): Promise<RunnerInfo | null> {
     const res = await fetch(`${this.apiBase}/users/${username}`, {
       headers: {

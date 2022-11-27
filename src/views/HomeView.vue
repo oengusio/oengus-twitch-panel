@@ -19,6 +19,12 @@ export default defineComponent({
       configStore,
     };
   },
+  mounted() {
+    window.gtag('event', 'PageLoaded', {
+      event_category: 'Page',
+      event_label: 'home',
+    });
+  },
 });
 </script>
 

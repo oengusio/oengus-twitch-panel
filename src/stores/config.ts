@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { Config } from '@/types/OengusTypes';
-import { loadTwitchConfig } from '@/external/twitch';
+import { loadTwitchConfig, updateTwitchConfig } from '@/external/twitch';
 
 interface ConfigType {
   loaded: boolean;
@@ -21,6 +21,10 @@ export const useConfigStore = defineStore({
     //
   },
   actions: {
+    updateConfig(config: Config): void {
+      this.marathonConfig = config;
+      updateTwitchConfig(config);
+    },
     async loadSettingsFromTwitch(): Promise<void> {
       if (this.loaded) {
         return;

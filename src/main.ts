@@ -3,6 +3,8 @@ import { createPinia } from 'pinia';
 import { useConfigStore } from '@/stores/config';
 import { useRunStore } from '@/stores/run';
 
+import './analytics';
+
 import App from './App.vue';
 import router from './router';
 

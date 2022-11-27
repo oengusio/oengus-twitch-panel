@@ -32,6 +32,16 @@ function getParsedConfig(): Partial<Config> {
   return JSON.parse(configRaw);
 }
 
+export function updateTwitchConfig(config: Config): void {
+  Twitch.ext.configuration.set('broadcaster', '1.0', JSON.stringify(config));
+
+  // notify the extension about the updated config
+  Twitch.ext.send('broadcast', 'application/json', {
+    type: 'CONFIG_UPDATE',
+    config,
+  });
+}
+
 /**
  * Important: ONLY EVER CALL THIS FUNCTION ONCE
  */
