@@ -13,11 +13,6 @@ Twitch.ext.onError((err: any) => {
   console.error('[oengus]', err);
 });
 
-Twitch.ext.onAuthorized((auth) => {
-  console.log('[oengus] auth viewer linked', Twitch.ext.viewer.isLinked); // true if user has opted to share id
-  console.log('[oengus] auth user id', auth.userId);
-});
-
 Twitch.ext.listen(
   'broadcast',
   (target: string, contentType: string, message: string) => {
@@ -31,16 +26,43 @@ Twitch.ext.listen(
   }
 );
 
-export function triggerIdShareOverlay() {
-  Twitch.ext.actions.requestIdShare();
-}
-
-export function hasSharedId(): boolean {
-  return Twitch.ext.viewer.isLinked;
-}
-
 export function followRunner(username: string) {
   Twitch.ext.actions.followChannel(username);
+}
+
+const waitingForFollow: {
+  channelName: string;
+  callback: (didFollow: boolean) => void;
+}[] = [];
+
+Twitch.ext.actions.onFollow((didFollow: boolean, channelName: string) => {
+  console.log(
+    '[oengus] follow callback',
+    JSON.stringify({ didFollow, channelName })
+  );
+
+  const waiting = waitingForFollow.filter((w) => w.channelName === channelName);
+
+  waiting.forEach((w) => {
+    w.callback(didFollow);
+
+    const idx = waitingForFollow.indexOf(w);
+
+    if (idx > -1) {
+      waitingForFollow.splice(idx, 1);
+    }
+  });
+});
+
+export async function waitForTwitchFollow(
+  channelName: string
+): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    waitingForFollow.push({
+      channelName,
+      callback: resolve,
+    });
+  });
 }
 
 function getParsedConfig(): Partial<Config> {

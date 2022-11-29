@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import type { RunnerInfo } from '@/types/OengusTypes';
 import { oengusApi } from '@/apis/oengus';
-import { followRunner, hasSharedId, triggerIdShareOverlay } from '@/external/twitch';
+import { followRunner, waitForTwitchFollow } from '@/external/twitch';
 
 export default defineComponent({
   name: 'runner-info',
@@ -13,9 +13,9 @@ export default defineComponent({
       required: true,
     },
   },
-  watch: {
-    //
-  },
+  data: () => ({
+    following: false,
+  }),
   computed: {
     avatarUrl(): string {
       return oengusApi.getAvatarUrl(this.runner.username);
@@ -27,17 +27,18 @@ export default defineComponent({
   },
   methods: {
     followOnTwitch() {
-      // TODO: is this required?
-      if (!hasSharedId()) {
-        triggerIdShareOverlay();
+      const usn = this.twitchUsername;
+
+      if (!usn) {
         return;
       }
 
-      if (!this.twitchUsername) {
-        return;
-      }
+      followRunner(usn);
 
-      followRunner(this.twitchUsername);
+      waitForTwitchFollow(usn).then((didFollow) => {
+        console.log('[oengus] did follow?', didFollow);
+        this.following = didFollow;
+      });
     },
   },
 });
@@ -62,10 +63,15 @@ export default defineComponent({
         </div>
 
         <div class="content" v-if="twitchUsername">
-          <button @click="followOnTwitch" class="follow-btn">
-            <span class="inner">
-              Follow
-            </span>
+          <button
+            @click="followOnTwitch"
+            class="follow-btn"
+            :class="{
+              following: following,
+            }"
+          >
+            <span class="inner" v-if="following">Following</span>
+            <span class="inner" v-else>Follow</span>
           </button>
         </div>
       </div>
@@ -74,7 +80,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-
 .follow-btn {
   position: relative;
   background-color: var(--twitch-purple);
@@ -93,6 +98,10 @@ export default defineComponent({
   text-decoration: none;
   white-space: nowrap;
   user-select: none;
+
+  &.following {
+    background-color: grey;
+  }
 
   margin: 0;
   padding: 0;

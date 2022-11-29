@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { useConfigStore } from '@/stores/config';
 import * as bulmaToast from 'bulma-toast';
 import { oengusApi } from '@/apis/oengus';
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
   name: 'config-view',

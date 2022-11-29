@@ -26,7 +26,7 @@ export default defineComponent({
 
 <template>
   <footer v-if="showFooter">
-    <p v-if="configStore.loaded">
+    <p v-if="configStore.loaded && configStore.marathonConfig.marathonId">
       <a
         :href="`https://${configStore.marathonConfig.domain}/marathon/${configStore.marathonConfig.marathonId}/schedule`"
         target="_blank"
