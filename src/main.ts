@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { useConfigStore } from '@/stores/config';
-import { useRunStore } from '@/stores/run';
 
 import './analytics';
 
@@ -16,7 +15,6 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
-const configStore = useConfigStore();
 oengusApi.subscribeToStore();
 
 // TODO: remove after settings page is created
@@ -28,7 +26,8 @@ oengusApi.subscribeToStore();
 //   },
 // });
 
-configStore.loadSettingsFromTwitch().then(() => {
-  console.log('[oengus] mounting app');
-  app.mount('#app');
-});
+const configStore = useConfigStore();
+await configStore.loadSettingsFromTwitch();
+
+console.log('[oengus] mounting app');
+app.mount('#app');
