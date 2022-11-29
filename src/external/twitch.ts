@@ -13,6 +13,11 @@ Twitch.ext.onError((err: any) => {
   console.error('[oengus]', err);
 });
 
+Twitch.ext.onAuthorized((auth) => {
+  console.log('[oengus] auth viewer linked', Twitch.ext.viewer.isLinked); // true if user has opted to share id
+  console.log('[oengus] auth user id', auth.userId);
+});
+
 Twitch.ext.listen(
   'broadcast',
   (target: string, contentType: string, message: string) => {
@@ -25,6 +30,18 @@ Twitch.ext.listen(
     }
   }
 );
+
+export function triggerIdShareOverlay() {
+  Twitch.ext.actions.requestIdShare();
+}
+
+export function hasSharedId(): boolean {
+  return Twitch.ext.viewer.isLinked;
+}
+
+export function followRunner(username: string) {
+  Twitch.ext.actions.followChannel(username);
+}
 
 function getParsedConfig(): Partial<Config> {
   const configRaw = Twitch.ext.configuration.broadcaster?.content ?? '{}';
@@ -51,8 +68,6 @@ export function loadTwitchConfig(callback: ConfigLambda): void {
 
   // we can use this to check for the config being loaded
   Twitch.ext.configuration.onChanged(() => {
-    console.log('[oengus] Config updated');
-    console.log(getParsedConfig());
     configCallback(getParsedConfig());
   });
 }

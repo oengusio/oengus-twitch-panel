@@ -3,6 +3,7 @@ import { defineComponent } from 'vue';
 import { useConfigStore } from '@/stores/config';
 import { useRunStore } from '@/stores/run';
 import RunInfo from '@/components/run/RunInfo.vue';
+import { oengusApi } from '@/apis/oengus';
 
 // TODO: mount,beforeUnmount hooks for starting and stopping the timer
 export default defineComponent({
@@ -13,6 +14,22 @@ export default defineComponent({
   setup() {
     const configStore = useConfigStore();
     const runStore = useRunStore();
+
+    // TODO: timer
+    const short = configStore.marathonConfig.marathonId || '';
+    console.log('[oengus] current short', JSON.stringify(short));
+
+    if (short) {
+      oengusApi.getTickerData(short).then((data) => {
+        if (data === null) {
+          return;
+        }
+
+        const { current, next } = data;
+
+        runStore.$patch({ current, next });
+      });
+    }
 
     return {
       runStore,

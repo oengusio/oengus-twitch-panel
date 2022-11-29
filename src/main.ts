@@ -16,12 +16,8 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
-oengusApi.subscribeToStore();
-
-// TODO: remove, only for testing
 const configStore = useConfigStore();
-
-await configStore.loadSettingsFromTwitch();
+oengusApi.subscribeToStore();
 
 // TODO: remove after settings page is created
 // configStore.$patch({
@@ -32,20 +28,7 @@ await configStore.loadSettingsFromTwitch();
 //   },
 // });
 
-const runStore = useRunStore();
-const short = configStore.marathonConfig.marathonId || '';
-
-if (short) {
-  oengusApi.getTickerData(short).then((data) => {
-    if (data === null) {
-      return;
-    }
-
-    const { current, next } = data;
-
-    runStore.$patch({ current, next });
-  });
-}
-// TODO: end of section
-
-app.mount('#app');
+configStore.loadSettingsFromTwitch().then(() => {
+  console.log('[oengus] mounting app');
+  app.mount('#app');
+});

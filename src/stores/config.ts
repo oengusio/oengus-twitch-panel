@@ -10,9 +10,9 @@ interface ConfigType {
 export const useConfigStore = defineStore({
   id: 'config',
   state: (): ConfigType => ({
-    loaded: true,
+    loaded: false,
     marathonConfig: {
-      marathonId: 'bsg2022',
+      marathonId: '',
       marathonName: null,
       domain: 'oengus.io',
     },
@@ -21,11 +21,12 @@ export const useConfigStore = defineStore({
     //
   },
   actions: {
-    updateConfig(config: Config): void {
-      this.marathonConfig = config;
-      updateTwitchConfig(config);
+    saveToTwitch(): void {
+      updateTwitchConfig(this.marathonConfig);
     },
     async loadSettingsFromTwitch(): Promise<void> {
+      console.log('[oengus] loading twitch settings', this.loaded);
+
       if (this.loaded) {
         return;
       }
@@ -36,15 +37,15 @@ export const useConfigStore = defineStore({
       });
 
       loadTwitchConfig((cfg) => {
+        console.log('[oengus] twitch settings loaded');
         this.$patch({
           marathonConfig: {
             ...cfg,
           },
         });
-        if (!this.loaded) {
-          this.loaded = true;
-          resolveFn();
-        }
+
+        this.loaded = true;
+        resolveFn();
       });
 
       return prom;

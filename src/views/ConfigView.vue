@@ -1,33 +1,25 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { useConfigStore } from '@/stores/config';
 import * as bulmaToast from 'bulma-toast';
 import { oengusApi } from '@/apis/oengus';
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'config-view',
   setup() {
     const configStore = useConfigStore();
+    const { marathonConfig } = storeToRefs(configStore);
     const oengusDomains = ['oengus.io', 'sandbox.oengus.io'];
 
     if (document.location.host === 'localhost:5173') {
       oengusDomains.push('oengus.dev');
     }
 
-    const marathonName = ref<string>(
-      configStore.marathonConfig.marathonName || 'None'
-    );
-    const marathonId = ref<string>(
-      configStore.marathonConfig.marathonId || 'None'
-    );
-    const domain = ref<string>(configStore.marathonConfig.domain || 'None');
-
     return {
       configStore,
       oengusDomains,
-      marathonName,
-      marathonId,
-      domain,
+      cfg: marathonConfig,
     };
   },
   mounted() {
@@ -41,7 +33,7 @@ export default defineComponent({
   },
   methods: {
     clearExt() {
-      this.marathonId = '';
+      this.cfg.marathonId = '';
       this.save();
     },
     async save(): Promise<void> {
@@ -55,22 +47,17 @@ export default defineComponent({
       });
 
       try {
-        if (this.marathonId) {
-          this.marathonName = await oengusApi.getMarathonName(
-            this.marathonId,
-            this.domain
-          );
+        const marathonId = this.cfg.marathonId;
+
+        if (marathonId) {
+          this.cfg.marathonName = await oengusApi.getMarathonName(marathonId);
         } else {
-          this.marathonName = 'None';
+          this.cfg.marathonName = 'None';
         }
 
-        console.log(this.marathonName);
+        console.log(this.cfg.marathonName);
 
-        this.configStore.updateConfig({
-          marathonId: this.marathonId,
-          marathonName: this.marathonName,
-          domain: this.domain,
-        });
+        this.configStore.saveToTwitch();
 
         /*window.gtag('event', 'ConfigSaved', {
           event_category: 'config',
@@ -88,9 +75,9 @@ export default defineComponent({
         });
       } catch (e) {
         bulmaToast.toast({
-          duration: 9999999999,
+          duration: 10000,
           single: true,
-          message: `No marathon with id "${this.marathonId}" found.`,
+          message: `No marathon with id "${this.cfg.marathonId}" found.`,
           type: 'is-warning',
           position: 'top-center',
           dismissible: true,
@@ -117,7 +104,7 @@ export default defineComponent({
                 <input
                   class="input is-static"
                   type="text"
-                  :value="marathonName"
+                  :value="cfg.marathonName"
                   readonly
                 />
               </p>
@@ -132,7 +119,7 @@ export default defineComponent({
 
           <div class="control">
             <div class="select">
-              <select v-model="domain">
+              <select v-model="cfg.domain">
                 <option
                   v-for="domain in oengusDomains"
                   :value="domain"
@@ -153,7 +140,7 @@ export default defineComponent({
               type="text"
               class="input"
               placeholder="myMarathon"
-              v-model="marathonId"
+              v-model="cfg.marathonId"
             />
           </div>
         </div>

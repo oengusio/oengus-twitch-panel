@@ -8,6 +8,7 @@ class OengusAPI {
     const store = useConfigStore();
 
     store.$subscribe(() => {
+      console.log(store.marathonConfig.domain);
       this.oengusDomain = store.marathonConfig.domain;
     });
   }
@@ -20,6 +21,7 @@ class OengusAPI {
     return `${this.apiBase}/users/${username}/avatar`;
   }
 
+  // TODO: domain part here is stupid
   public async getMarathonName(short: string, domain = ''): Promise<string> {
     let base = this.apiBase;
 
