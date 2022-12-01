@@ -96,7 +96,7 @@ export default defineComponent({
       return duration.toHumanReadable(dur);
     },
     // TODO: install vue-i18n
-    $d(date: string): string {
+    $d(date: string | Date): string {
       const d = new Date(date);
       const h = (i: number) => (i < 9 ? `0${i}` : `${i}`);
       return `${h(d.getHours())}:${h(d.getMinutes())}`;
