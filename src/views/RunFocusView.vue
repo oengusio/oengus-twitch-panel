@@ -2,7 +2,6 @@
 import { defineComponent } from 'vue';
 import RunFocus from '@/components/run/RunFocus.vue';
 import type { TickerRun } from '@/types/OengusTypes';
-import { mapStores } from 'pinia';
 import { useRunStore } from '@/stores/run';
 import { useConfigStore } from '@/stores/config';
 

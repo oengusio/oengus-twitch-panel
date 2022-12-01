@@ -2,7 +2,7 @@ import { createRouter, createMemoryHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
-  history: createMemoryHistory(import.meta.env.BASE_URL), // Switch back to createWebHashHistory?
+  history: createMemoryHistory(), // Switch back to createWebHashHistory(import.meta.env.BASE_URL)?
   routes: [
     {
       path: '/',

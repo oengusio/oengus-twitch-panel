@@ -48,6 +48,7 @@ class TickerTimer {
   }
 
   private async refreshTicker(): Promise<void> {
+    // TODO: make a better algorithm
     console.log(
       '[oengus] ticker update, current short',
       JSON.stringify(this.marathonShort)

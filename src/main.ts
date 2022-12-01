@@ -29,7 +29,8 @@ const mode = new URL(document.location.toString()).searchParams.get('mode');
 console.log('[oengus] running in', mode, 'mode!');
 
 if (mode === 'config') {
-  await router.push('/config');
+  // Don't await, fucks with the router
+  router.push('/config');
 } else {
   tickerTimer.setup();
 }
