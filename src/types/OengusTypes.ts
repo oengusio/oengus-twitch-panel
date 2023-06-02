@@ -42,7 +42,8 @@ export interface TickerData {
   next: TickerRun | null;
 }
 
-export interface Config {
+export interface Config<T = 'OENGUS'> {
+  type: T;
   marathonId: string | null;
   marathonName: string | null;
   domain: string;

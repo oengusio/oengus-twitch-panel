@@ -12,12 +12,16 @@ class OengusAPI {
     });
   }
 
+  private get apiClean(): string {
+    return `https://${this.oengusDomain}/api`;
+  }
+
   private get apiBase(): string {
-    return `https://${this.oengusDomain}/api/v1`;
+    return `${this.apiClean}/v1`;
   }
 
   public getAvatarUrl(username: string): string {
-    return `${this.apiBase}/users/${username}/avatar`;
+    return `${this.apiClean}/v2/users/${username}/avatar`;
   }
 
   public async getMarathonName(short: string): Promise<string> {
@@ -28,7 +32,7 @@ class OengusAPI {
     });
 
     if (res.status === 404) {
-      throw new Error('Marathon now found');
+      throw new Error('Marathon not found');
     }
 
     const json = await res.json();

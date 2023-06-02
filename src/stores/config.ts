@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { Config } from '@/types/OengusTypes';
 import { loadTwitchConfig, updateTwitchConfig } from '@/external/twitch';
+import type { Config, HoraroConfig } from '@/types';
 
 interface ConfigType {
   loaded: boolean;
-  marathonConfig: Config;
+  marathonConfig: Config | HoraroConfig;
 }
 
 export const useConfigStore = defineStore({
@@ -12,6 +12,7 @@ export const useConfigStore = defineStore({
   state: (): ConfigType => ({
     loaded: false,
     marathonConfig: {
+      type: 'OENGUS',
       marathonId: '',
       marathonName: null,
       domain: 'oengus.io',
