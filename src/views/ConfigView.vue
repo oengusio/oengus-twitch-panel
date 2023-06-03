@@ -7,10 +7,14 @@ import { storeToRefs } from 'pinia';
 import OengusConfig from '@/components/config/OengusConfig.vue';
 import HoraroConfig from '@/components/config/HoraroConfig.vue';
 import { horaroApi } from '@/apis/horaro';
+import { getColumnIndexes, indexToName } from '@/helpers/horaroHelpers';
 
 export default defineComponent({
   name: 'config-view',
-  components: { HoraroConfig, OengusConfig },
+  components: {
+    HoraroConfig,
+    OengusConfig,
+  },
   setup() {
     const configStore = useConfigStore();
     const { marathonConfig } = storeToRefs(configStore);
@@ -20,8 +24,8 @@ export default defineComponent({
       oengusDomains.push('oengus.dev');
     }
 
-    const horaroEventSlug = ref('');
-    const horaroScheduleSlug = ref('');
+    const horaroEventSlug = ref('esa');
+    const horaroScheduleSlug = ref('2023-winter1');
 
     return {
       configStore,
@@ -31,20 +35,12 @@ export default defineComponent({
       horaroScheduleSlug,
     };
   },
-  mounted() {
-    /*window.gtag('event', 'PageLoaded', {
-      event_category: 'Page',
-      event_label: 'config',
-    });*/
-  },
-  computed: {
-    //
-  },
   watch: {
     'cfg.domain'(domain: string) {
       this.cfg.type = domain === 'horaro.org' ? 'HORARO' : 'OENGUS';
 
       if (this.cfg.type === 'HORARO') {
+        this.cfg.marathonName = '';
         this.cfg.hiddenDataKey = '';
         this.cfg.marathonId = '';
       } else {
@@ -60,14 +56,42 @@ export default defineComponent({
     async loadOengusData(marathonId: string): Promise<void> {
       this.cfg.marathonName = await oengusApi.getMarathonName(marathonId);
     },
-    async loadHoraroData(): Promise<void> {
-      const { id, name } = await horaroApi.loadBasicScheduleInfo(
+    async loadHoraroData(): Promise<boolean> {
+      const data = await horaroApi.loadBasicScheduleInfo(
         this.horaroEventSlug,
         this.horaroScheduleSlug
       );
 
-      this.cfg.marathonId = id;
-      this.cfg.marathonName = name;
+      const indexes = Object.entries(getColumnIndexes(data));
+      const missing = [];
+
+      for (const [key, value] of indexes) {
+        if (value === -1) {
+          // This key is valid, we know as it comes from the indexes
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          missing.push(indexToName(key));
+        }
+      }
+
+      if (missing.length > 0) {
+        bulmaToast.toast({
+          duration: 10000,
+          single: true,
+          message: `Did not manage to find the following columns in your schedule: ${missing.join(
+            ', '
+          )}`,
+          type: 'is-warning',
+          position: 'top-center',
+          dismissible: true,
+        });
+        return false;
+      }
+
+      this.cfg.marathonId = data.schedule.id;
+      this.cfg.marathonName = data.schedule.name;
+
+      return true;
     },
     async save(): Promise<void> {
       bulmaToast.toast({
@@ -86,7 +110,11 @@ export default defineComponent({
           if (this.cfg.type === 'OENGUS') {
             await this.loadOengusData(marathonId);
           } else {
-            await this.loadHoraroData();
+            const res = await this.loadHoraroData();
+
+            if (!res) {
+              return;
+            }
           }
         } else {
           this.cfg.marathonName = 'None';
@@ -95,11 +123,6 @@ export default defineComponent({
         console.log(this.cfg.marathonName);
 
         this.configStore.saveToTwitch();
-
-        /*window.gtag('event', 'ConfigSaved', {
-          event_category: 'config',
-          event_label: this.marathonId,
-        });*/
 
         // TODO: fork and fix
         bulmaToast.toast({
@@ -130,7 +153,12 @@ export default defineComponent({
     <h2 class="title">Oengus Extension Configuration</h2>
 
     <div class="container">
-      {{ cfg.domain }}
+      <p v-if="cfg.type === 'HORARO'">
+        <b>WARNING:</b> Horaro support is very experimental and may not work as
+        expected as it's designed to work with an ESA schedule. <br>
+        Becacuse of this the following fields are required: "Game", "Platform", "Category", "Player(s)"
+      </p>
+      <br>
       <form action="#">
         <OengusConfig
           v-if="cfg.type === 'OENGUS'"

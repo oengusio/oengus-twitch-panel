@@ -120,14 +120,14 @@ export default defineComponent({
     </div>
   </div>
 
-  <div class="field">
-    <label class="label">Hidden data key:</label>
-    <div class="control">
-      <input class="input" type="text" v-model="dataHiddenDataKey" />
-    </div>
-    <p class="help">
-      The Horaro system is build with ESA in mind and will look for the
-      following specific hidden fields:
-    </p>
-  </div>
+  <!--  <div class="field">-->
+  <!--    <label class="label">Hidden data key:</label>-->
+  <!--    <div class="control">-->
+  <!--      <input class="input" type="text" v-model="dataHiddenDataKey" />-->
+  <!--    </div>-->
+  <!--    <p class="help">-->
+  <!--      The Horaro system is build with ESA in mind and will look for the-->
+  <!--      following specific hidden fields:-->
+  <!--    </p>-->
+  <!--  </div>-->
 </template>

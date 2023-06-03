@@ -3,9 +3,12 @@ import { useRunStore } from '@/stores/run';
 import { oengusApi } from '@/apis/oengus';
 import type { Store } from 'pinia';
 import type { TickerRun } from '@/types/OengusTypes';
+import { horaroApi } from '@/apis/horaro';
+import { parseToOengusData } from '@/helpers/horaroHelpers';
 
 class TickerTimer {
   private marathonShort = '';
+  private type: 'OENGUS' | 'HORARO' = 'OENGUS';
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore (this works)
   private runStore: Store<
@@ -33,9 +36,11 @@ class TickerTimer {
     const configStore = useConfigStore();
 
     this.marathonShort = configStore.marathonConfig.marathonId || '';
+    this.type = configStore.marathonConfig.type || 'OENGUS';
 
     configStore.$subscribe(() => {
       this.marathonShort = configStore.marathonConfig.marathonId || '';
+      this.type = configStore.marathonConfig.type || 'OENGUS';
       this.refreshTicker();
     });
 
@@ -62,7 +67,10 @@ class TickerTimer {
       return;
     }
 
-    const data = await oengusApi.getTickerData(this.marathonShort);
+    const data =
+      this.type === 'OENGUS'
+        ? await oengusApi.getTickerData(this.marathonShort)
+        : await parseToOengusData(horaroApi.getTickerData(this.marathonShort));
 
     if (data === null) {
       // reset store?

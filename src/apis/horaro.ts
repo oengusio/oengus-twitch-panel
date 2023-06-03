@@ -10,7 +10,7 @@ class HoraroApi {
   public async loadBasicScheduleInfo(
     event: string,
     scheduleSlug: string
-  ): Promise<{ id: string; name: string }> {
+  ): Promise<HoraroTickerData> {
     const res = await fetch(
       `${this.apiBase}/events/${event}/schedules/${scheduleSlug}/ticker`,
       {
@@ -26,10 +26,7 @@ class HoraroApi {
 
     const json: HoraroResponse<HoraroTickerData> = await res.json();
 
-    return {
-      id: json.data.schedule.id,
-      name: json.data.schedule.name,
-    };
+    return json.data;
   }
 
   public async getTickerData(
