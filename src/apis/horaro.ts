@@ -42,7 +42,9 @@ class HoraroApi {
       return null;
     }
 
-    return await res.json();
+    const json: HoraroResponse<HoraroTickerData> = await res.json();
+
+    return json.data;
   }
 }
 

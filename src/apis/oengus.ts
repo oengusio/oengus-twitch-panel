@@ -8,7 +8,7 @@ class OengusAPI {
     const store = useConfigStore();
 
     store.$subscribe(() => {
-      this.oengusDomain = store.marathonConfig.domain;
+      this.oengusDomain = store.marathonConfig.oengusDomain || store.marathonConfig.domain;
     });
   }
 

@@ -27,7 +27,7 @@ export default defineComponent({
 <template>
   <div v-if="configStore.loaded">
     <template v-if="configStore.marathonConfig.marathonId">
-      <h1 class="subtitle">{{ configStore.marathonConfig.marathonName }}</h1>
+      <h4 class="title is-4">{{ configStore.marathonConfig.marathonName }}</h4>
       <template v-if="runStore.hasRuns">
         <RunInfo v-if="runStore.current" :data="runStore.current" />
         <RunInfo v-if="runStore.next" next :data="runStore.next" />

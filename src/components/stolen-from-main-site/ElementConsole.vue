@@ -9,13 +9,19 @@ export default defineComponent({
     },
     isEmulated: Boolean,
   },
+  setup(props) {
+    // idk why this is needed, is stupid.
+    return {
+      consoleName: props.console,
+    };
+  },
 });
 </script>
 
 <template>
   <span>
     <span>
-      {{ console }}
+      {{ consoleName }}
     </span>
     <sup v-if="isEmulated">[Emu]</sup>
   </span>

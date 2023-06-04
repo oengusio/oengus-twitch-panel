@@ -25,9 +25,15 @@ export interface HoraroRun {
 
 export interface HoraroTickerData {
   schedule: HoraroSchedule;
-  previous: HoraroRun | null;
-  current: HoraroRun | null;
-  next: HoraroRun | null;
+  ticker: {
+    previous: HoraroRun | null;
+    current: HoraroRun | null;
+    next: HoraroRun | null;
+  };
+  /**
+   * @deprecated - do not use
+   */
+  items: HoraroRun[];
 }
 
 export interface HoraroResponse<T> {

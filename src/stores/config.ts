@@ -16,6 +16,7 @@ export const useConfigStore = defineStore({
       marathonId: '',
       marathonName: null,
       domain: 'oengus.io',
+      oengusDomain: 'oengus.io',
     },
   }),
   getters: {

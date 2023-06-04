@@ -25,7 +25,7 @@ export default defineComponent({
     }
 
     const horaroEventSlug = ref('esa');
-    const horaroScheduleSlug = ref('2023-winter1');
+    const horaroScheduleSlug = ref('');
 
     return {
       configStore,
@@ -40,11 +40,13 @@ export default defineComponent({
       this.cfg.type = domain === 'horaro.org' ? 'HORARO' : 'OENGUS';
 
       if (this.cfg.type === 'HORARO') {
+        this.cfg.oengusDomain = 'oengus.io';
         this.cfg.marathonName = '';
         this.cfg.hiddenDataKey = '';
         this.cfg.marathonId = '';
       } else {
         this.cfg.marathonId = '';
+        this.cfg.oengusDomain = '';
       }
     },
   },

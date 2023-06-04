@@ -21,6 +21,7 @@ export default defineComponent({
       return oengusApi.getAvatarUrl(this.runner.username);
     },
     twitchUsername(): string | undefined {
+      console.log(JSON.stringify(this.runner));
       return this.runner.connections.find((c) => c.platform === 'TWITCH')
         ?.username;
     },

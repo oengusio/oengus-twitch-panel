@@ -4,6 +4,7 @@ import type {
   HoraroRun,
   TickerRun,
   RunnerInfo,
+  RunnerConnection,
 } from '@/types';
 
 type ColumnIndexes = {
@@ -13,12 +14,10 @@ type ColumnIndexes = {
   runners: number; // Player(s)
 };
 
-const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-
 function extractMarkdownLink(raw: string): { title: string; url: string } {
-  const match = raw.match(linkRegex);
-
-  console.log(match);
+  // Can't re-use regex apparently
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const match = linkRegex.exec(raw);
 
   if (match) {
     return { title: match[1], url: match[2] };
@@ -28,11 +27,40 @@ function extractMarkdownLink(raw: string): { title: string; url: string } {
 }
 
 function getTwitchUsername(url: string): string {
-  return url.replace('https://twitch.tv/', '');
+  return url
+    .replace('https://www.twitch.tv/', '')
+    .replace('https://twitch.tv/', '');
 }
 
 function extractRunners(raw: string): RunnerInfo[] {
-  throw new Error('Method not implemented.');
+  const result: RunnerInfo[] = [];
+  const runners = raw.split(/,|&|vs\./).map((it) => it.trim());
+
+  for (const runner of runners) {
+    const info = extractMarkdownLink(runner);
+    const connections: RunnerConnection[] = [];
+
+    if (
+      info.url.startsWith('https://www.twitch.tv') ||
+      info.url.startsWith('https://twitch.tv')
+    ) {
+      const username = getTwitchUsername(info.url);
+      connections.push({
+        id: 0,
+        username,
+        platform: 'TWITCH',
+      });
+    }
+
+    result.push({
+      id: 0,
+      username: info.title,
+      pronouns: null,
+      connections,
+    });
+  }
+
+  return result;
 }
 
 export function indexToName(index: keyof ColumnIndexes): string {
@@ -69,23 +97,28 @@ export async function parseToOengusData(
     };
   }
 
+  const ticker = data.ticker;
   const indexes = getColumnIndexes(data);
 
   return {
-    current: data.current
-      ? horaroToOengus(data.current, indexes)
-      : data.previous
-      ? horaroToOengus(data.previous, indexes)
+    current: ticker.current
+      ? horaroToOengus(ticker.current, indexes, 0)
+      : ticker.previous
+      ? horaroToOengus(ticker.previous, indexes, 0)
       : null,
-    next: data.next ? horaroToOengus(data.next, indexes) : null,
+    next: ticker.next ? horaroToOengus(ticker.next, indexes, 1) : null,
   };
 }
 
-function horaroToOengus(run: HoraroRun, indexes: ColumnIndexes): TickerRun {
+function horaroToOengus(
+  run: HoraroRun,
+  indexes: ColumnIndexes,
+  customId: number
+): TickerRun {
   return {
-    id: 0,
+    id: customId,
     gameName: extractMarkdownLink(run.data[indexes.gameName]).title,
-    console: run.data[indexes.console],
+    console: run.data[indexes.console].toString(),
     emulated: false,
     ratio: 'unknown',
     categoryName: run.data[indexes.category],
