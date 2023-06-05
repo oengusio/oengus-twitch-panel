@@ -41,7 +41,7 @@ export interface HoraroResponse<T> {
 }
 
 export interface HoraroConfig extends Config<'HORARO'> {
-  marathonId: string | null;
-  marathonName: string | null;
-  hiddenDataKey: string | null;
+  marathonId: string;
+  marathonName: string;
+  hiddenDataKey: string;
 }

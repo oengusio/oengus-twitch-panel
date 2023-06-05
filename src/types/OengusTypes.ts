@@ -46,8 +46,8 @@ export interface TickerData {
 
 export interface Config<T = 'OENGUS'> {
   type: T;
-  marathonId: string | null;
-  marathonName: string | null;
+  marathonId: string;
+  marathonName: string;
   domain: string;
   oengusDomain: string;
 }

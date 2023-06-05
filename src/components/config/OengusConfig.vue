@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, type PropType } from 'vue';
 
 export default defineComponent({
   props: {
@@ -8,7 +8,7 @@ export default defineComponent({
       required: true,
     },
     oengusDomains: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     domain: {

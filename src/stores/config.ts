@@ -14,7 +14,7 @@ export const useConfigStore = defineStore({
     marathonConfig: {
       type: 'OENGUS',
       marathonId: '',
-      marathonName: null,
+      marathonName: '',
       domain: 'oengus.io',
       oengusDomain: 'oengus.io',
     },
@@ -42,6 +42,12 @@ export const useConfigStore = defineStore({
         console.log('[oengus] twitch settings loaded');
         this.$patch({
           marathonConfig: {
+            // safe defaults
+            type: 'OENGUS',
+            marathonId: '',
+            marathonName: '',
+            domain: 'oengus.io',
+            oengusDomain: 'oengus.io',
             ...cfg,
           },
         });

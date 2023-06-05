@@ -105,9 +105,9 @@ export default defineComponent({
         dismissible: true,
       });
 
-      try {
-        const marathonId = this.cfg.marathonId || this.horaroScheduleSlug;
+      const marathonId = this.cfg.marathonId || this.horaroScheduleSlug;
 
+      try {
         if (marathonId) {
           if (this.cfg.type === 'OENGUS') {
             await this.loadOengusData(marathonId);
@@ -139,7 +139,7 @@ export default defineComponent({
         bulmaToast.toast({
           duration: 10000,
           single: true,
-          message: `No marathon with id "${this.cfg.marathonId}" found.`,
+          message: `No marathon with id "${marathonId}" found.`,
           type: 'is-warning',
           position: 'top-center',
           dismissible: true,
