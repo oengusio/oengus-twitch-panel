@@ -1,9 +1,8 @@
 import type { HoraroResponse, HoraroTickerData } from '@/types';
 
 class HoraroApi {
-  // https://app.esamarathon.dev/horaro-proxy/v2/esa/schedule/https://horaro.org/esa/2023-winter1
   private get apiBase(): string {
-    return 'https://app.esamarathon.dev/horaro-proxy/api_proxy/https://horaro.org/-/api/v1';
+    return 'https://app.esamarathon.com/horaro-proxy/api_proxy/https://horaro.org/-/api/v1';
   }
 
   public async loadBasicScheduleInfo(
