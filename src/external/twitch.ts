@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type Twitch from 'twitch-ext';
-import type { Config } from '@/types/OengusTypes';
+import type { configUnion } from '@/types';
 
-type ConfigLambda = (config: Partial<Config>) => void;
+type ConfigLambda = (config: Partial<configUnion>) => void;
 
 let configCallback: ConfigLambda = (config: object): void => {
   console.log('[oengus] default config callback', config);
@@ -65,13 +65,13 @@ export async function waitForTwitchFollow(
   });
 }
 
-function getParsedConfig(): Partial<Config> {
+function getParsedConfig(): Partial<configUnion> {
   const configRaw = Twitch.ext.configuration.broadcaster?.content ?? '{}';
 
   return JSON.parse(configRaw);
 }
 
-export function updateTwitchConfig(config: Config): void {
+export function updateTwitchConfig(config: configUnion): void {
   Twitch.ext.configuration.set('broadcaster', '1.0', JSON.stringify(config));
 
   // notify the extension about the updated config

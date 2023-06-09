@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { Config } from '@/types/OengusTypes';
 import { loadTwitchConfig, updateTwitchConfig } from '@/external/twitch';
+import type { Config, HoraroConfig } from '@/types';
 
 interface ConfigType {
   loaded: boolean;
-  marathonConfig: Config;
+  marathonConfig: Config | HoraroConfig;
 }
 
 export const useConfigStore = defineStore({
@@ -12,9 +12,11 @@ export const useConfigStore = defineStore({
   state: (): ConfigType => ({
     loaded: false,
     marathonConfig: {
+      type: 'OENGUS',
       marathonId: '',
-      marathonName: null,
+      marathonName: '',
       domain: 'oengus.io',
+      oengusDomain: 'oengus.io',
     },
   }),
   getters: {
@@ -40,6 +42,12 @@ export const useConfigStore = defineStore({
         console.log('[oengus] twitch settings loaded');
         this.$patch({
           marathonConfig: {
+            // safe defaults
+            type: 'OENGUS',
+            marathonId: '',
+            marathonName: '',
+            domain: 'oengus.io',
+            oengusDomain: 'oengus.io',
             ...cfg,
           },
         });

@@ -1,12 +1,14 @@
+export interface RunnerConnection {
+  id: number;
+  platform: string;
+  username: string;
+}
+
 export interface RunnerInfo {
   id: number;
   username: string;
   pronouns: string | null;
-  connections: Array<{
-    id: number;
-    platform: string;
-    username: string;
-  }>;
+  connections: Array<RunnerConnection>;
 }
 
 export interface RunInfoProp {
@@ -42,8 +44,10 @@ export interface TickerData {
   next: TickerRun | null;
 }
 
-export interface Config {
-  marathonId: string | null;
-  marathonName: string | null;
+export interface Config<T = 'OENGUS'> {
+  type: T;
+  marathonId: string;
+  marathonName: string;
   domain: string;
+  oengusDomain: string;
 }
