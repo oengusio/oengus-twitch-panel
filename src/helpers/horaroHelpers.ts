@@ -131,7 +131,7 @@ function horaroToOengus(
     type: 'Unknown',
     runners: extractRunners(run.data[indexes.runners]),
     customDataDTO: '',
-    date: new Date(run.scheduled_t),
+    date: new Date(run.scheduled_t * 1000),
     setupBlockText: '',
   };
 }

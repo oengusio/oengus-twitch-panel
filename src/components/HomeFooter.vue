@@ -26,7 +26,13 @@ export default defineComponent({
 
 <template>
   <footer v-if="showFooter">
-    <p v-if="configStore.loaded && configStore.marathonConfig.marathonId">
+    <p
+      v-if="
+        configStore.loaded &&
+        configStore.marathonConfig.marathonId &&
+        configStore.marathonConfig.type === 'OENGUS'
+      "
+    >
       <a
         :href="`https://${configStore.marathonConfig.domain}/marathon/${configStore.marathonConfig.marathonId}/schedule`"
         target="_blank"
@@ -36,10 +42,7 @@ export default defineComponent({
       </a>
     </p>
     <p v-else>
-      <a
-        :href="`https://${configStore.marathonConfig.domain}/`"
-        target="_blank"
-      >
+      <a href="https://oengus.io/" target="_blank">
         Powered by
         <img class="brandLogo" src="@/assets/logo.svg" alt="Oengus.io" />
       </a>

@@ -45,15 +45,17 @@
       {{ parseDuration(run.setupTime) }}
     </template>
 
-    <span class="is-label">Link</span>
-    <!-- TODO: use helper to select correct domain and template url -->
-    <a
-      :href="`https://${oengusDomain}/marathon/${marathonId}/schedule#run-${run.id}`"
-      target="_blank"
-      rel="nofollow"
-    >
-      {{ `#run-${run.id}` }}
-    </a>
+    <template v-if="isOengusSchedule">
+      <span class="is-label">Link</span>
+      <!-- TODO: use helper to select correct domain and template url -->
+      <a
+        :href="`https://${oengusDomain}/marathon/${marathonId}/schedule#run-${run.id}`"
+        target="_blank"
+        rel="nofollow"
+      >
+        {{ `#run-${run.id}` }}
+      </a>
+    </template>
   </div>
 </template>
 
@@ -106,6 +108,9 @@ export default defineComponent({
     oengusDomain(): string {
       return this.configStore.marathonConfig.domain;
     },
+    isOengusSchedule(): boolean {
+      return this.configStore.marathonConfig.type === 'OENGUS';
+    },
   },
 });
 </script>
@@ -116,21 +121,26 @@ export default defineComponent({
   grid-template-columns: auto 1fr;
   grid-auto-rows: auto;
   gap: calc(var(--spacing) / 2);
+
   > .header {
     grid-column: 1 / -1;
     text-align: center;
+
     > .title {
       margin-block-end: calc(var(--spacing) / 2);
     }
   }
+
   > .is-label {
     font-weight: bold;
     justify-self: end;
     white-space: nowrap;
+
     &::after {
       content: ':';
     }
   }
+
   > *:not(.is-label) {
     overflow-x: auto;
   }
