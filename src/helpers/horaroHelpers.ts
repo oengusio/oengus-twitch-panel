@@ -54,7 +54,8 @@ function extractRunners(raw: string): RunnerInfo[] {
 
     result.push({
       id: 0,
-      username: info.title,
+      username: info.title.toLowerCase(),
+      displayName: info.title,
       pronouns: null,
       connections,
     });

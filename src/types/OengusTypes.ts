@@ -7,6 +7,7 @@ export interface RunnerConnection {
 export interface RunnerInfo {
   id: number;
   username: string;
+  displayName: string;
   pronouns: string | null;
   connections: Array<RunnerConnection>;
 }

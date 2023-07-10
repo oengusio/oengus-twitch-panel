@@ -56,7 +56,7 @@ export default defineComponent({
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-4">{{ runner.username }}</p>
+            <p class="title is-4">{{ runner.displayName }}</p>
             <p class="subtitle is-6" v-if="twitchUsername">
               @{{ twitchUsername }}
             </p>

@@ -65,7 +65,7 @@ export default defineComponent({
         By:
         <span v-for="(runner, i) in runners" :key="i">
           <RouterLink :to="`/line/${runId}/runners`">{{
-            runner.username
+            runner.displayName
           }}</RouterLink>
         </span>
       </p>
