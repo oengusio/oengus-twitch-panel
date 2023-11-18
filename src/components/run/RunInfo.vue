@@ -23,6 +23,7 @@ export default defineComponent({
   }),
   mounted() {
     if (this.next) {
+      this.timeUntilNext = getTimeDistance(this.data.date);
       // Vue only updates when a dependency changes,
       //  this is why we manually update the time on an interval.
       this.updateInterval = setInterval(() => {
