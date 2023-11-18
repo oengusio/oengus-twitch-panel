@@ -17,6 +17,12 @@ export default defineComponent({
     },
     next: Boolean,
   },
+  methods: {
+    // This is a method to make sure that the time properly updates
+    getTimeUntilNextRun(): string {
+      return getTimeDistance(this.data.date);
+    },
+  },
   computed: {
     runId() {
       return this.data.id;
@@ -38,9 +44,6 @@ export default defineComponent({
     classSelector(): string {
       return this.next ? 'is-secondary' : 'is-primary';
     },
-    timeUntilNextRun(): string {
-      return getTimeDistance(this.data.date);
-    },
   },
 });
 </script>
@@ -50,7 +53,7 @@ export default defineComponent({
     <div class="message-header">
       <p>
         <RouterLink :to="`/line/${runId}`">
-          <span v-if="next">Next run ({{ timeUntilNextRun }})</span>
+          <span v-if="next">Next run ({{ getTimeUntilNextRun() }})</span>
           <span v-else>Current run</span>
         </RouterLink>
       </p>
