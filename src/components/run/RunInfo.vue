@@ -17,11 +17,21 @@ export default defineComponent({
     },
     next: Boolean,
   },
-  methods: {
-    // This is a method to make sure that the time properly updates
-    getTimeUntilNextRun(): string {
-      return getTimeDistance(this.data.date);
-    },
+  data: () => ({
+    timeUntilNext: '',
+    updateInterval: -1,
+  }),
+  mounted() {
+    if (this.next) {
+      // Vue only updates when a dependency changes,
+      //  this is why we manually update the time on an interval.
+      this.updateInterval = setInterval(() => {
+        this.timeUntilNext = getTimeDistance(this.data.date);
+      }, 500);
+    }
+  },
+  beforeUnmount() {
+    clearInterval(this.updateInterval);
   },
   computed: {
     runId() {
@@ -53,7 +63,7 @@ export default defineComponent({
     <div class="message-header">
       <p>
         <RouterLink :to="`/line/${runId}`">
-          <span v-if="next">Next run ({{ getTimeUntilNextRun() }})</span>
+          <span v-if="next">Next run ({{ timeUntilNext }})</span>
           <span v-else>Current run</span>
         </RouterLink>
       </p>
