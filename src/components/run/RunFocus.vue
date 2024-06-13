@@ -14,6 +14,10 @@ export default defineComponent({
       type: Object as PropType<TickerRun>,
       required: true,
     },
+    scheduleSlug: {
+      type: String,
+      required: true,
+    },
     marathonId: {
       type: String,
       required: true,
@@ -32,7 +36,11 @@ export default defineComponent({
     }"
   >
     <router-link to="/" class="delete"></router-link>
-    <DetailContainer :run="run" :marathonId="marathonId" />
+    <DetailContainer
+      :run="run"
+      :schedule-slug="scheduleSlug"
+      :marathonId="marathonId"
+    />
   </div>
 </template>
 

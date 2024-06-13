@@ -19,8 +19,12 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    scheduleSlug: {
+      type: String,
+      required: true,
+    },
   },
-  emits: ['update:domain', 'update:marathonId'],
+  emits: ['update:domain', 'update:marathonId', 'update:scheduleSlug'],
   watch: {
     dataDomain() {
       this.$emit('update:domain', this.dataDomain);
@@ -28,11 +32,15 @@ export default defineComponent({
     dataMarathonId() {
       this.$emit('update:marathonId', this.dataMarathonId);
     },
+    dataScheduleSlug() {
+      this.$emit('update:scheduleSlug', this.dataScheduleSlug);
+    },
   },
   setup(props) {
     return {
       dataDomain: ref(props.domain),
       dataMarathonId: ref(props.marathonId),
+      dataScheduleSlug: ref(props.scheduleSlug),
     };
   },
 });
@@ -82,6 +90,19 @@ export default defineComponent({
         class="input"
         placeholder="myMarathon"
         v-model="dataMarathonId"
+      />
+    </div>
+
+    <p class="control">
+      <a href="" class="button is-static">/schedule/</a>
+    </p>
+
+    <div class="control">
+      <input
+        type="text"
+        class="input"
+        placeholder="best-schedule-ever"
+        v-model="dataScheduleSlug"
       />
     </div>
   </div>

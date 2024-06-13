@@ -15,6 +15,8 @@ export const useConfigStore = defineStore({
       type: 'OENGUS',
       marathonId: '',
       marathonName: '',
+      scheduleSlug: '',
+      scheduleId: -1,
       domain: 'oengus.io',
       oengusDomain: 'oengus.io',
     },
@@ -45,6 +47,8 @@ export const useConfigStore = defineStore({
             // safe defaults
             type: 'OENGUS',
             marathonId: '',
+            scheduleSlug: '',
+            scheduleId: -1,
             marathonName: '',
             domain: 'oengus.io',
             oengusDomain: 'oengus.io',

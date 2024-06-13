@@ -3,7 +3,7 @@ import type {
   HoraroTickerData,
   HoraroRun,
   TickerRun,
-  RunnerInfo,
+  LineRunner,
   RunnerConnection,
 } from '@/types';
 
@@ -32,8 +32,8 @@ function getTwitchUsername(url: string): string {
     .replace('https://twitch.tv/', '');
 }
 
-function extractRunners(raw: string): RunnerInfo[] {
-  const result: RunnerInfo[] = [];
+function extractRunners(raw: string): LineRunner[] {
+  const result: LineRunner[] = [];
   const runners = raw.split(/,|&|vs\./).map((it) => it.trim());
 
   for (const runner of runners) {
@@ -53,11 +53,13 @@ function extractRunners(raw: string): RunnerInfo[] {
     }
 
     result.push({
-      id: 0,
-      username: info.title.toLowerCase(),
-      displayName: info.title,
-      pronouns: null,
-      connections,
+      profile: {
+        id: 0,
+        username: info.title.toLowerCase(),
+        displayName: info.title,
+        pronouns: [],
+        connections,
+      },
     });
   }
 
@@ -118,20 +120,19 @@ function horaroToOengus(
 ): TickerRun {
   return {
     id: customId,
-    gameName: extractMarkdownLink(run.data[indexes.gameName]).title,
+    game: extractMarkdownLink(run.data[indexes.gameName]).title,
     console: run.data[indexes.console].toString(),
     emulated: false,
     ratio: 'unknown',
-    categoryName: run.data[indexes.category],
+    category: run.data[indexes.category],
     estimate: run.length,
     setupBlock: false,
     setupTime: null,
     customRun: false,
     position: -1,
-    categoryId: -1,
     type: 'Unknown',
     runners: extractRunners(run.data[indexes.runners]),
-    customDataDTO: '',
+    customData: '',
     date: new Date(run.scheduled_t * 1000),
     setupBlockText: '',
   };

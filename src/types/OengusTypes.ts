@@ -4,12 +4,17 @@ export interface RunnerConnection {
   username: string;
 }
 
-export interface RunnerInfo {
+export interface UserInfo {
   id: number;
   username: string;
   displayName: string;
-  pronouns: string | null;
+  pronouns: Array<string>;
   connections: Array<RunnerConnection>;
+}
+
+export interface LineRunner {
+  runnerName?: string;
+  profile?: UserInfo;
 }
 
 export interface RunInfoProp {
@@ -17,32 +22,40 @@ export interface RunInfoProp {
   runId: number;
   runInfo: Array<string>;
   date: Date;
-  runners: Array<RunnerInfo>;
+  runners: Array<LineRunner>;
 }
 
 export interface TickerRun {
   id: number;
-  gameName: string | null;
+  game: string | null;
   console: string | null;
   emulated: boolean;
   ratio: string | null;
-  categoryName: string | null;
+  category: string | null;
   estimate: string;
   setupBlock: boolean;
   setupTime: string | null;
   customRun: boolean;
   position: number;
-  categoryId: number | null;
   type: string;
-  runners: Array<RunnerInfo>;
+  runners: Array<LineRunner>;
   setupBlockText?: string;
   date: Date;
-  customDataDTO: string | null;
+  customData: string | null;
 }
 
 export interface TickerData {
   current: TickerRun | null;
   next: TickerRun | null;
+}
+
+export interface V2Schedule {
+  id: number;
+  name: string;
+  slug: string;
+  marathonId: string;
+  published: boolean;
+  lines: TickerRun[];
 }
 
 export interface Config<T = 'OENGUS'> {
@@ -51,4 +64,6 @@ export interface Config<T = 'OENGUS'> {
   marathonName: string;
   domain: string;
   oengusDomain: string;
+  scheduleSlug: string;
+  scheduleId: number;
 }

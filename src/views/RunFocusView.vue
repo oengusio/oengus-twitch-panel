@@ -29,6 +29,9 @@ export default defineComponent({
     marathonId(): string {
       return this.configStore.marathonConfig.marathonId || '';
     },
+    scheduleSlug(): string {
+      return this.configStore.marathonConfig.scheduleSlug || '';
+    },
     runData(): { current: boolean; runInfo: TickerRun } | null {
       if (!this.id) {
         return null;
@@ -66,6 +69,7 @@ export default defineComponent({
     :run="runData.runInfo"
     :current-run="runData.current"
     :marathon-id="marathonId"
+    :schedule-slug="scheduleSlug"
   />
 </template>
 

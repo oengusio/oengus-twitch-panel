@@ -1,4 +1,4 @@
-import type { TickerData, RunnerInfo } from '@/types/OengusTypes';
+import type { TickerData, LineRunner, V2Schedule } from '@/types/OengusTypes';
 import { useConfigStore } from '@/stores/config';
 
 class OengusAPI {
@@ -8,7 +8,9 @@ class OengusAPI {
     const store = useConfigStore();
 
     store.$subscribe(() => {
-      this.oengusDomain = store.marathonConfig.oengusDomain || store.marathonConfig.domain;
+      const mc = store.marathonConfig;
+
+      this.oengusDomain = mc.oengusDomain || mc.domain;
     });
   }
 
@@ -17,7 +19,7 @@ class OengusAPI {
   }
 
   private get apiBase(): string {
-    return `${this.apiClean}/v1`;
+    return `${this.apiClean}/v2`;
   }
 
   public getAvatarUrl(username: string): string {
@@ -40,7 +42,7 @@ class OengusAPI {
     return json.name as string;
   }
 
-  public async getUserInfo(username: string): Promise<RunnerInfo | null> {
+  public async getUserInfo(username: string): Promise<LineRunner | null> {
     const res = await fetch(`${this.apiBase}/users/${username}`, {
       headers: {
         'User-Agent': 'OengusIO Twitch Panel',
@@ -54,9 +56,32 @@ class OengusAPI {
     return res.json();
   }
 
-  public async getTickerData(shortCode: string): Promise<TickerData | null> {
+  public async lookupSchedule(
+    marathonId: string,
+    slug: string
+  ): Promise<V2Schedule | null> {
     const res = await fetch(
-      `${this.apiBase}/marathons/${shortCode}/schedule/ticker`,
+      `${this.apiBase}/marathons/${marathonId}/schedules/for-slug/${slug}`,
+      {
+        headers: {
+          'User-Agent': 'OengusIO Twitch Panel',
+        },
+      }
+    );
+
+    if (res.status !== 200) {
+      return null;
+    }
+
+    return await res.json();
+  }
+
+  public async getTickerData(
+    shortCode: string,
+    scheduleId: number
+  ): Promise<TickerData | null> {
+    const res = await fetch(
+      `${this.apiBase}/marathons/${shortCode}/schedules/${scheduleId}/ticker`,
       {
         headers: {
           'User-Agent': 'OengusIO Twitch Panel',

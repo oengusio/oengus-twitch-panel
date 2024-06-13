@@ -21,12 +21,19 @@ export default defineComponent({
   mounted() {
     //
   },
+  computed: {
+    marathonAndScheduleIdsSet() {
+      const mc = this.configStore.marathonConfig;
+
+      return mc.marathonId && mc.scheduleId > 0;
+    },
+  },
 });
 </script>
 
 <template>
   <div v-if="configStore.loaded">
-    <template v-if="configStore.marathonConfig.marathonId">
+    <template v-if="marathonAndScheduleIdsSet">
       <h4 class="title is-4">{{ configStore.marathonConfig.marathonName }}</h4>
       <template v-if="runStore.hasRuns">
         <RunInfo v-if="runStore.current" :data="runStore.current" />

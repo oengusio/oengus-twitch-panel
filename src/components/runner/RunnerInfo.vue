@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import type { RunnerInfo } from '@/types/OengusTypes';
+import type { LineRunner } from '@/types/OengusTypes';
 import { oengusApi } from '@/apis/oengus';
 import { followRunner, waitForTwitchFollow } from '@/external/twitch';
 
@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'runner-info',
   props: {
     runner: {
-      type: Object as PropType<RunnerInfo>,
+      type: Object as PropType<LineRunner>,
       required: true,
     },
   },
@@ -18,12 +18,19 @@ export default defineComponent({
   }),
   computed: {
     avatarUrl(): string {
-      return oengusApi.getAvatarUrl(this.runner.username);
+      const { profile } = this.runner;
+
+      if (profile) {
+        return oengusApi.getAvatarUrl(profile.username);
+      }
+
+      return '';
     },
     twitchUsername(): string | undefined {
       console.log(JSON.stringify(this.runner));
-      return this.runner.connections.find((c) => c.platform === 'TWITCH')
-        ?.username;
+      return this.runner.profile?.connections.find(
+        (c) => c.platform === 'TWITCH'
+      )?.username;
     },
   },
   methods: {
@@ -50,13 +57,16 @@ export default defineComponent({
     <div class="card">
       <div class="card-content">
         <div class="media">
-          <div class="media-left">
+          <div v-if="avatarUrl" class="media-left">
             <figure class="image is-48x48">
               <img :src="avatarUrl" />
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-4">{{ runner.displayName }}</p>
+            <p class="title is-4">
+              {{ runner.runnerName ?? runner.profile?.displayName }}
+            </p>
+            <!-- TODO: render pronouns -->
             <p class="subtitle is-6" v-if="twitchUsername">
               @{{ twitchUsername }}
             </p>

@@ -42,7 +42,7 @@ export default defineComponent({
     <div v-if="scheduleLine" class="columns is-gapless">
       <RunnerInfoComponent
         v-for="runner in scheduleLine.runners"
-        :key="runner.id"
+        :key="runner.runnerName ?? runner.profile?.id"
         :runner="runner"
       />
     </div>

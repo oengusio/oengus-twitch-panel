@@ -44,8 +44,8 @@ export default defineComponent({
       }
 
       return [
-        this.data.gameName || '',
-        this.data.categoryName || '',
+        this.data.game || '',
+        this.data.category || '',
         this.data.console || '',
       ];
     },
@@ -79,7 +79,7 @@ export default defineComponent({
         By:
         <span v-for="(runner, i) in runners" :key="i">
           <RouterLink :to="`/line/${runId}/runners`">{{
-            runner.displayName
+            runner.runnerName ?? runner.profile?.displayName
           }}</RouterLink>
         </span>
       </p>

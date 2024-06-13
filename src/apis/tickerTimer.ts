@@ -8,6 +8,7 @@ import { parseToOengusData } from '@/helpers/horaroHelpers';
 
 class TickerTimer {
   private marathonShort = '';
+  private scheduleId = -1;
   private type: 'OENGUS' | 'HORARO' = 'OENGUS';
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore (this works)
@@ -36,10 +37,12 @@ class TickerTimer {
     const configStore = useConfigStore();
 
     this.marathonShort = configStore.marathonConfig.marathonId || '';
+    this.scheduleId = configStore.marathonConfig.scheduleId || -1;
     this.type = configStore.marathonConfig.type || 'OENGUS';
 
     configStore.$subscribe(() => {
       this.marathonShort = configStore.marathonConfig.marathonId || '';
+      this.scheduleId = configStore.marathonConfig.scheduleId || -1;
       this.type = configStore.marathonConfig.type || 'OENGUS';
       this.refreshTicker();
     });
@@ -59,7 +62,7 @@ class TickerTimer {
       JSON.stringify(this.marathonShort)
     );
 
-    if (!this.marathonShort) {
+    if (!this.marathonShort || this.scheduleId < 1) {
       this.runStore.$patch({
         next: null,
         current: null,
@@ -69,7 +72,7 @@ class TickerTimer {
 
     const data =
       this.type === 'OENGUS'
-        ? await oengusApi.getTickerData(this.marathonShort)
+        ? await oengusApi.getTickerData(this.marathonShort, this.scheduleId)
         : await parseToOengusData(horaroApi.getTickerData(this.marathonShort));
 
     if (data === null) {

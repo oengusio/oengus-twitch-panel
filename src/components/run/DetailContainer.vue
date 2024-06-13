@@ -2,9 +2,7 @@
   <div class="run-detail-container">
     <div class="header">
       <h4 class="title is-4">
-        {{
-          run.setupBlock ? run.setupBlockText || 'Setup Block' : run.gameName
-        }}
+        {{ run.setupBlock ? run.setupBlockText || 'Setup Block' : run.game }}
       </h4>
     </div>
 
@@ -16,10 +14,10 @@
       </span>
     </template>
 
-    <template v-if="run.categoryName">
+    <template v-if="run.category">
       <span class="is-label">Category</span>
       <span>
-        {{ run.categoryName }}
+        {{ run.category }}
       </span>
     </template>
 
@@ -49,11 +47,11 @@
       <span class="is-label">Link</span>
       <!-- TODO: use helper to select correct domain and template url -->
       <a
-        :href="`https://${oengusDomain}/marathon/${marathonId}/schedule#run-${run.id}`"
+        :href="`https://${oengusDomain}/marathon/${marathonId}/schedule/${scheduleSlug}#run-${run.id}`"
         target="_blank"
         rel="nofollow"
       >
-        {{ `#run-${run.id}` }}
+        #run-{{ run.id }}
       </a>
     </template>
   </div>
@@ -76,6 +74,10 @@ export default defineComponent({
   props: {
     run: {
       type: Object as PropType<TickerRun>,
+      required: true,
+    },
+    scheduleSlug: {
+      type: String,
       required: true,
     },
     marathonId: {

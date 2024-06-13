@@ -25,14 +25,12 @@ export default defineComponent({
     }
 
     const horaroEventSlug = ref('esa');
-    const horaroScheduleSlug = ref('');
 
     return {
       configStore,
       oengusDomains,
       cfg: marathonConfig,
       horaroEventSlug,
-      horaroScheduleSlug,
     };
   },
   watch: {
@@ -44,8 +42,11 @@ export default defineComponent({
         this.cfg.marathonName = '';
         this.cfg.hiddenDataKey = '';
         this.cfg.marathonId = '';
+        this.cfg.scheduleSlug = '';
       } else {
         this.cfg.marathonId = '';
+        this.cfg.scheduleSlug = '';
+        this.cfg.scheduleId = -1;
         this.cfg.oengusDomain = '';
       }
     },
@@ -53,15 +54,23 @@ export default defineComponent({
   methods: {
     clearExt() {
       this.cfg.marathonId = '';
+      this.cfg.scheduleId = -1;
+      this.cfg.scheduleSlug = '';
       this.save();
     },
     async loadOengusData(marathonId: string): Promise<void> {
       this.cfg.marathonName = await oengusApi.getMarathonName(marathonId);
+      const schedule = await oengusApi.lookupSchedule(
+        marathonId,
+        this.cfg.scheduleSlug
+      );
+
+      this.cfg.scheduleId = schedule?.id ?? -1;
     },
     async loadHoraroData(): Promise<boolean> {
       const data = await horaroApi.loadBasicScheduleInfo(
         this.horaroEventSlug,
-        this.horaroScheduleSlug
+        this.cfg.scheduleSlug
       );
 
       const indexes = Object.entries(getColumnIndexes(data));
@@ -105,7 +114,7 @@ export default defineComponent({
         dismissible: true,
       });
 
-      const marathonId = this.cfg.marathonId || this.horaroScheduleSlug;
+      const marathonId = this.cfg.marathonId || this.cfg.scheduleSlug;
 
       try {
         if (marathonId) {
@@ -157,15 +166,17 @@ export default defineComponent({
     <div class="container">
       <p v-if="cfg.type === 'HORARO'">
         <b>WARNING:</b> Horaro support is very experimental and may not work as
-        expected as it's designed to work with an ESA schedule. <br>
-        Becacuse of this the following fields are required: "Game", "Platform", "Category", "Player(s)"
+        expected as it's designed to work with an ESA schedule. <br />
+        Becacuse of this the following fields are required: "Game", "Platform",
+        "Category", "Player(s)"
       </p>
-      <br>
+      <br />
       <form action="#">
         <OengusConfig
           v-if="cfg.type === 'OENGUS'"
           v-model:marathon-id="cfg.marathonId"
           v-model:domain="cfg.domain"
+          v-model:schedule-slug="cfg.scheduleSlug"
           :oengus-domains="oengusDomains"
           :marathon-name="cfg.marathonName"
         />
@@ -175,7 +186,7 @@ export default defineComponent({
           :oengus-domains="oengusDomains"
           v-model:domain="cfg.domain"
           v-model:event-slug="horaroEventSlug"
-          v-model:schedule-slug="horaroScheduleSlug"
+          v-model:schedule-slug="cfg.scheduleSlug"
           v-model:hidden-data-key="cfg.hiddenDataKey"
         />
 
