@@ -26,7 +26,7 @@ const mode = new URL(document.location.toString()).searchParams.get('mode');
 
 console.log('[oengus] running in', mode, 'mode!');
 
-if (mode === 'config') {
+if (mode === 'config' || mode === 'dashboard') {
   // Don't await, fucks with the router
   router.push('/config');
 } else {
