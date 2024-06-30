@@ -27,7 +27,7 @@ class OengusAPI {
   }
 
   public async getMarathonName(short: string): Promise<string> {
-    const res = await fetch(`${this.apiBase}/marathons/${short}`, {
+    const res = await fetch(`${this.apiClean}/v1/marathons/${short}`, {
       headers: {
         'User-Agent': 'OengusIO Twitch Panel',
       },

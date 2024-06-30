@@ -34,7 +34,7 @@ export default defineComponent({
       "
     >
       <a
-        :href="`https://${configStore.marathonConfig.domain}/marathon/${configStore.marathonConfig.marathonId}/schedule`"
+        :href="`https://${configStore.marathonConfig.domain}/marathon/${configStore.marathonConfig.marathonId}/schedule/${configStore.marathonConfig.scheduleSlug}`"
         target="_blank"
       >
         View the full schedule on
