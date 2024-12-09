@@ -22,7 +22,7 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.45",
     "@types/twitch-ext": "^1.24.9",
-    "@vitejs/plugin-vue": "^3.0.1",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/tsconfig": "^0.1.3",
