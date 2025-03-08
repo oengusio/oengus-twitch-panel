@@ -7,8 +7,7 @@ interface ConfigType {
   marathonConfig: Config | HoraroConfig;
 }
 
-export const useConfigStore = defineStore({
-  id: 'config',
+export const useConfigStore = defineStore('config', {
   state: (): ConfigType => ({
     loaded: false,
     marathonConfig: {

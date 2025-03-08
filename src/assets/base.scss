@@ -1,5 +1,5 @@
 @use 'sass:color' as color;
-@import 'node_modules/bulmaswatch/solar/variables';
+@import 'bulmaswatch/solar/variables';
 
 // Improve text contrast for accessibility
 $-lightness-change: 36%;
@@ -7,5 +7,5 @@ $text: color.scale($text, $lightness: $-lightness-change);
 $title-color: color.scale($title-color, $lightness: $-lightness-change);
 $code: #ffc8e2;
 
-@import 'node_modules/bulma/bulma';
-@import 'node_modules/bulmaswatch/solar/overrides';
+@import 'bulma/bulma';
+@import 'bulmaswatch/solar/overrides';

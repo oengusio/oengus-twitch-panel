@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import type { TickerRun } from '@/types/OengusTypes';
 
-export const useRunStore = defineStore({
-  id: 'run',
+export const useRunStore = defineStore('run', {
   state: () => ({
     next: null as TickerRun | null,
     current: null as TickerRun | null,
