@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "bulma": "^0.9.4",
+    "bulma": "^1.0.4",
     "bulma-toast": "^2.4.4",
     "bulmaswatch": "^0.8.1",
     "pinia": "^3.0.1",
