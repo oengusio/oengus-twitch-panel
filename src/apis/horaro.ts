@@ -1,14 +1,8 @@
 import type { HoraroResponse, HoraroTickerData } from '@/types';
 
 class HoraroApi {
-  private get apiBase(): string {
-    return 'https://app.esamarathon.com/horaro-proxy/api_proxy/';
-  }
-
   private horaroUrl(path: string): string {
-    return `${this.apiBase}${encodeURIComponent(
-      `https://horaro.org/-/api/v1${path}`
-    )}`;
+    return `https://horaro.net/-/api/v1${path}`;
   }
 
   public async loadBasicScheduleInfo(

@@ -18,7 +18,7 @@ export default defineComponent({
   setup() {
     const configStore = useConfigStore();
     const { marathonConfig } = storeToRefs(configStore);
-    const oengusDomains = ['oengus.io', 'sandbox.oengus.io', 'horaro.org'];
+    const oengusDomains = ['oengus.io', 'sandbox.oengus.io', 'horaro.net'];
 
     if (document.location.host === 'localhost:5173') {
       oengusDomains.push('oengus.dev');
@@ -35,7 +35,7 @@ export default defineComponent({
   },
   watch: {
     'cfg.domain'(domain: string) {
-      this.cfg.type = domain === 'horaro.org' ? 'HORARO' : 'OENGUS';
+      this.cfg.type = domain === 'horaro.net' ? 'HORARO' : 'OENGUS';
 
       if (this.cfg.type === 'HORARO') {
         this.cfg.oengusDomain = 'oengus.io';
