@@ -9,10 +9,12 @@ let configCallback: ConfigLambda = (config: object): void => {
   console.log('[oengus] default config callback', config);
 };
 
+// @ts-ignore import is required.
 Twitch.ext.onError((err: any) => {
   console.error('[oengus]', err);
 });
 
+// @ts-ignore import is required.
 Twitch.ext.listen(
   'broadcast',
   (target: string, contentType: string, message: string) => {
@@ -27,6 +29,7 @@ Twitch.ext.listen(
 );
 
 export function followRunner(username: string) {
+// @ts-ignore import is required.
   Twitch.ext.actions.followChannel(username);
 }
 
@@ -35,6 +38,7 @@ const waitingForFollow: {
   callback: (didFollow: boolean) => void;
 }[] = [];
 
+// @ts-ignore import is required.
 Twitch.ext.actions.onFollow((didFollow: boolean, channelName: string) => {
   console.log(
     '[oengus] follow callback',
@@ -66,15 +70,18 @@ export async function waitForTwitchFollow(
 }
 
 function getParsedConfig(): Partial<configUnion> {
+// @ts-ignore import is required.
   const configRaw = Twitch.ext.configuration.broadcaster?.content ?? '{}';
 
   return JSON.parse(configRaw);
 }
 
 export function updateTwitchConfig(config: configUnion): void {
+// @ts-ignore import is required.
   Twitch.ext.configuration.set('broadcaster', '1.0', JSON.stringify(config));
 
   // notify the extension about the updated config
+// @ts-ignore import is required.
   Twitch.ext.send('broadcast', 'application/json', {
     type: 'CONFIG_UPDATE',
     config,
@@ -89,6 +96,7 @@ export function loadTwitchConfig(callback: ConfigLambda): void {
   // configCallback(getParsedConfig());
 
   // we can use this to check for the config being loaded
+// @ts-ignore import is required.
   Twitch.ext.configuration.onChanged(() => {
     configCallback(getParsedConfig());
   });

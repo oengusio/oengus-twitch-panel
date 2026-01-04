@@ -1,21 +1,18 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "noEmit": true,
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": [
-      "DOM",
-      "ES2020",
-      "ESNext"
-    ]
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
 
   "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
+//    {
+//      "path": "./tsconfig.config.json"
+//    }
   ]
 }

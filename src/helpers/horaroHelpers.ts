@@ -14,13 +14,17 @@ type ColumnIndexes = {
   runners: number; // Player(s)
 };
 
-function extractMarkdownLink(raw: string): { title: string; url: string } {
+function extractMarkdownLink(raw: string | undefined): { title: string; url: string } {
+  if (!raw) {
+    return { title: '', url: '' };
+  }
+
   // Can't re-use regex apparently
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const match = linkRegex.exec(raw);
 
   if (match) {
-    return { title: match[1], url: match[2] };
+    return { title: match[1]!, url: match[2]! };
   }
 
   return { title: raw, url: '' };
@@ -121,17 +125,17 @@ function horaroToOengus(
   return {
     id: customId,
     game: extractMarkdownLink(run.data[indexes.gameName]).title,
-    console: run.data[indexes.console].toString(),
+    console: run.data[indexes.console]!.toString(),
     emulated: false,
     ratio: 'unknown',
-    category: run.data[indexes.category],
+    category: run.data[indexes.category]!,
     estimate: run.length,
     setupBlock: false,
     setupTime: null,
     customRun: false,
     position: -1,
     type: 'Unknown',
-    runners: extractRunners(run.data[indexes.runners]),
+    runners: extractRunners(run.data[indexes.runners]!),
     customData: '',
     date: new Date(run.scheduled_t * 1000),
     setupBlockText: '',

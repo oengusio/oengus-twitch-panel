@@ -65,7 +65,7 @@ function levenshtein(s: string, t: string): number {
     g = x + 3;
     h = x + 4;
     for (y = 0; y < n; y++) {
-      a = p[y];
+      a = p[y]!;
       if (a < c || b < c) {
         c = a > b ? b + 1 : a + 1;
       } else {
@@ -110,7 +110,7 @@ function levenshtein(s: string, t: string): number {
     c = x;
     d = ++x;
     for (y = 0; y < n; y++) {
-      a = p[y];
+      a = p[y]!;
       if (a < c || d < c) {
         d = a > d ? d + 1 : a + 1;
       } else {

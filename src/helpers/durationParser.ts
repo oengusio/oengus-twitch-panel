@@ -72,7 +72,7 @@ export const duration = {
         durationUnitConversion[isTime ? 'time' : 'date'][
           unitSymbol as 'Y' | 'M' | 'W' | 'D' | 'H' | 'S'
         ]
-      ] = Number.parseFloat(value);
+      ] = Number.parseFloat(value!);
       duration = duration.slice(match[0].length);
     }
     if (parts.error) {
